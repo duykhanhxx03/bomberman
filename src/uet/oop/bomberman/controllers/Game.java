@@ -218,8 +218,11 @@ public class Game {
                     if (count > 0) {
                         count--;
                     } else {
-                        timer.cancel();
-                        gameStatus = GameStatus.OPENING;
+                        if (gameStatus.equals(GameStatus.LOSE)){
+                            timer.cancel();
+                            gameStatus = GameStatus.OPENING;
+                            System.out.println("oke");
+                        }
                     }
                 }
             };

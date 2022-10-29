@@ -96,6 +96,10 @@ public class Bomber extends MovingEntity {
             if (collisionDetector.checkCollisionWithFlame(this.x, this.y, REAL_WIDTH, REAL_HEIGHT)
                     || collisionDetector.checkCollisionWithEnemy(this.x, this.y, gameMap.getEnemies(),
                     Bomber.REAL_WIDTH, Bomber.REAL_HEIGHT)) {
+                if (!instance.isPlaying(AudioController.AudioType.PLAYER_DIE)
+                        && !lifeStatus.equals(LifeStatus.DEAD)) {
+                    instance.playSoundEffect(AudioController.AudioType.PLAYER_DIE);
+                }
                 lifeStatus = LifeStatus.DEAD;
             }
 
@@ -275,15 +279,11 @@ public class Bomber extends MovingEntity {
         }
         if (lifeStatus.equals(LifeStatus.DEAD)) {
             setImg(Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2,
-                    Sprite.player_dead3, indexBomberSprite, 100).getImage());
+                    Sprite.player_dead3, indexBomberSprite, 50).getImage());
             AudioController instance = Game.getInstance().getAudioController();
             if (instance.isPlaying(AudioController.AudioType.GAME_BGM)) instance.stopBgm();
 
-            if (!instance.isPlaying(AudioController.AudioType.PLAYER_DIE)) {
-                instance.playSoundEffect(AudioController.AudioType.PLAYER_DIE);
-            }
-
-            if (indexBomberSprite < 100) {
+            if (indexBomberSprite < 50) {
                 ++indexBomberSprite;
             } else {
                 if (Game.getInstance().getBomberLeft() > 0) {

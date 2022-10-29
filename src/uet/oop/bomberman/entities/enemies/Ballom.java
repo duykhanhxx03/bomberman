@@ -148,5 +148,4 @@ public class Ballom extends Enemy {
         Random rand = new Random();
         return list.get(rand.nextInt(list.size()));
     }
-
 }
