@@ -56,6 +56,7 @@ public class Bomber extends MovingEntity {
     private boolean isBombPass = false;
 
     private boolean isFlamePass = false;
+    private boolean isDetonator = false;
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -77,6 +78,7 @@ public class Bomber extends MovingEntity {
         setWallPass(itemInfo.isWallPass());
         setBombPass(itemInfo.isBombPass());
         setFlamePass(itemInfo.isFlamePass());
+        setDetonator(itemInfo.isDetonator());
     }
 
     private void updateKeyHandle() {
@@ -279,6 +281,14 @@ public class Bomber extends MovingEntity {
                 setImg(Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1,
                         Sprite.player_right_2, indexBomberSprite, 15).getImage());
             }
+            if (keyboardEvent.isPressed(KeyCode.B) && isDetonator) {
+                if (!bombList.isEmpty()) {
+                    Bomb bomb = (Bomb) bombList.get(0);
+                    bomb.setBombStatus(Bomb.BombStatus.WENTOFF);
+                    bomb.setWentOffPhrase(Bomb.WentOffPhraseStatus.OPENING);
+                    bomb.setIndexBombSprite(0);
+                }
+            }
 
             //SPACE
             if (keyboardEvent.isPressed(KeyCode.SPACE)) {
@@ -353,13 +363,13 @@ public class Bomber extends MovingEntity {
                     }
                 }
                 if (!isNotAllowed) {
-                    bombList.add(new Bomb(xUnit, yUnit, Sprite.bomb.getImage(), bombLevel, gameMap));
+                    bombList.add(new Bomb(xUnit, yUnit, Sprite.bomb.getImage(), bombLevel, gameMap, isDetonator));
                     Game.getInstance().getAudioController().playSoundEffect(AudioController.AudioType.BOMB_PLANTED);
                 }
 
             }
             if (bombList.isEmpty() && isPlantBomb) {
-                bombList.add(new Bomb(xUnit, yUnit, Sprite.bomb.getImage(), bombLevel, gameMap));
+                bombList.add(new Bomb(xUnit, yUnit, Sprite.bomb.getImage(), bombLevel, gameMap, isDetonator));
                 Game.getInstance().audioController.playSoundEffect(AudioController.AudioType.BOMB_PLANTED);
             }
         }
@@ -464,7 +474,16 @@ public class Bomber extends MovingEntity {
     public void setFlamePass(boolean flamePass) {
         isFlamePass = flamePass;
     }
+
     public boolean isFlamePass() {
         return isFlamePass;
+    }
+
+    public boolean isDetonator() {
+        return isDetonator;
+    }
+
+    public void setDetonator(boolean detonator) {
+        isDetonator = detonator;
     }
 }

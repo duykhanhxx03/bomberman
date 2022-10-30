@@ -9,8 +9,8 @@ public class ItemInfo {
 
     private boolean isWallPass;
     private boolean isBombPass;
-
     private boolean isFlamePass;
+    private boolean isDetonator;
 
     public void increaseItemSpeedCount() {
         itemSpeedCount++;
@@ -36,12 +36,17 @@ public class ItemInfo {
         isFlamePass = flamePass;
     }
 
+    public void setDetonator(boolean detonator) {
+        isDetonator = detonator;
+    }
+
     public ItemInfo() {
         itemBombsCount = Bomber.BOMBER_BOMB_LIST_SIZE_DEFAULT;
         itemSpeedCount = Bomber.BOMBER_SPEED_DEFAULT;
         itemFlamesCount = Bomber.BOMBER_BOMB_LEVEL_DEFAULT;
         isWallPass = false;
         isBombPass = false;
+        isDetonator = false;
     }
 
     public int getItemBombsCount() {
@@ -54,6 +59,10 @@ public class ItemInfo {
 
     public int getItemSpeedCount() {
         return itemSpeedCount;
+    }
+
+    public boolean isDetonator() {
+        return isDetonator;
     }
 
     public boolean isBombPass() {

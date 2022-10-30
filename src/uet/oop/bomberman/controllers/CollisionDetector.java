@@ -171,6 +171,15 @@ public class CollisionDetector {
                     gameInstance.getItemInfo().setFlamePass(true);
                     delPos = i;
                 }
+                if (gameMap.getItems().get(i) instanceof ItemDetonator) {
+                    if (!Game.getInstance().getAudioController().isPlaying(AudioController.AudioType.ITEM_COLLECTED)) {
+                        Game.getInstance().getAudioController().playSoundEffect(AudioController.AudioType.ITEM_COLLECTED);
+                    }
+                    bomber.setDetonator(true);
+                    gameInstance.getItemInfo().setDetonator(true);
+                    delPos = i;
+                }
+
                 if (gameMap.getItems().get(i) instanceof Portal
                         && gameMap.getEnemies().size() == 0
                         && Game.getInstance().getGameStatus().equals(GameStatus.PLAYING)) {

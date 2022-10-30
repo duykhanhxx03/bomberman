@@ -12,6 +12,7 @@ public class KeyboardEvent implements EventHandler<KeyEvent> {
     private boolean isKeyRight = false;
     private boolean isKeySpace = false;
 
+    private boolean isKeyB = false;
     private boolean isKeyP = false;
     private boolean isKeyR = false;
 
@@ -43,6 +44,9 @@ public class KeyboardEvent implements EventHandler<KeyEvent> {
                 case R:
                     isKeyR = true;
                     break;
+                case B:
+                    isKeyB = true;
+                    break;
                 case SPACE:
                     isKeySpace = true;
                     break;
@@ -66,6 +70,10 @@ public class KeyboardEvent implements EventHandler<KeyEvent> {
                     break;
                 case R:
                     isKeyR = false;
+                    break;
+                case B:
+                    isKeyB = false;
+                    break;
                 case SPACE:
                     isKeySpace = false;
                     break;
@@ -96,6 +104,9 @@ public class KeyboardEvent implements EventHandler<KeyEvent> {
                 break;
             case R:
                 result = isKeyR;
+                break;
+            case B:
+                result = isKeyB;
                 break;
         }
         return result;

@@ -57,30 +57,32 @@ public class Bomb extends Entity implements IObstacle {
     private BombStatus bombStatus = BombStatus.WAIT;
     private final Timer timer = new Timer();
 
-    public Bomb(int xUnit, int yUnit, Image img, int bombLevel, GameMap gameMap) {
+    public Bomb(int xUnit, int yUnit, Image img, int bombLevel, GameMap gameMap, boolean isDetonator) {
         super(xUnit, yUnit, img);
         this.gameMap = gameMap;
         this.bombLevel = bombLevel;
-        TimerTask timerTask = new TimerTask() {
-            int count = 0;
+        if (!isDetonator) {
+            TimerTask timerTask = new TimerTask() {
+                int count = 0;
 
-            @Override
-            public void run() {
-                final int countDownBombWait = 3;
-                if(!Game.getInstance().getGameStatus().equals(GameStatus.PAUSED)){
-                    count++;
+                @Override
+                public void run() {
+                    final int countDownBombWait = 3;
+                    if (!Game.getInstance().getGameStatus().equals(GameStatus.PAUSED)) {
+                        count++;
+                    }
+                    if (countDownBombWait - count >= 0) {
+                        bombStatus = BombStatus.WAIT;
+                    } else {
+                        bombStatus = BombStatus.WENTOFF;
+                        wentOffPhrase = WentOffPhraseStatus.OPENING;
+                        indexBombSprite = 0;
+                        timer.cancel();
+                    }
                 }
-                if (countDownBombWait - count >= 0) {
-                    bombStatus = BombStatus.WAIT;
-                } else {
-                    bombStatus = BombStatus.WENTOFF;
-                    wentOffPhrase = WentOffPhraseStatus.OPENING;
-                    indexBombSprite = 0;
-                    timer.cancel();
-                }
-            }
-        };
-        timer.schedule(timerTask, 0, 1000);
+            };
+            timer.schedule(timerTask, 0, 1000);
+        }
 
         //make left flame
         checkLeftFlame(xUnit, yUnit);
@@ -359,8 +361,8 @@ public class Bomb extends Entity implements IObstacle {
         updateNearbyBombActivation();
         switch (bombStatus) {
             case WAIT:
-                ++indexBombSprite;
                 setImg(Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, indexBombSprite, 60).getImage());
+                indexBombSprite = indexBombSprite < 10 * 60 ? indexBombSprite + 1 : 0;
                 break;
             case WENTOFF:
                 if (!Game.getInstance().getAudioController().isPlaying(AudioController.AudioType.BOMB_DESTROY)) {

@@ -115,6 +115,11 @@ public class GameMap {
                             items.add(new ItemBombPass(j, i, Sprite.powerup_bombpass.getImage()));
                             tmpWallAndGrass.add(new Grass(j, i, Sprite.grass.getImage()));
                             break;
+                        case 'd':
+                            bricks.add(new Brick(j, i, Sprite.brick.getImage()));
+                            items.add(new ItemDetonator(j, i, Sprite.powerup_detonator.getImage()));
+                            tmpWallAndGrass.add(new Grass(j, i, Sprite.grass.getImage()));
+                            break;
                         case 'k':
                             bricks.add(new Brick(j, i, Sprite.brick.getImage()));
                             items.add(new ItemFlamePass(j, i, Sprite.powerup_flamepass.getImage()));
