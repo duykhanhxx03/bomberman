@@ -18,7 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Game {
-    private int currentLevel = 1;
+    private int currentLevel;
     public final static int MAX_LEVEL = 5;
     // Tao root container
 
@@ -324,7 +324,7 @@ public class Game {
     }
 
     public void init() {
-        currentLevel = 1;
+        currentLevel = 5;
         bomberLeft = Bomber.BOMBER_LEFT_DEFAULT;
         bomberScore = Bomber.BOMBER_SCORE_DEFAULT;
         itemInfo = new ItemInfo();
