@@ -1,5 +1,12 @@
 # Bài tập lớn OOP - Bomberman Game
 
+## Thành viên nhóm
+
+| Họ và tên           | Mã sinh viên |
+| :------------------ | :----------- |
+| Trần Duy Khánh      | 21020769     |
+| Nguyễn Bá Hoàng Kim | 21020772     |
+
 Trong bài tập lớn này, nhiệm vụ của bạn là viết một phiên bản Java mô phỏng lại trò chơi [Bomberman](https://www.youtube.com/watch?v=mKIOVwqgSXM) kinh điển của NES.
 
 <img src="res/demo.png" alt="drawing" width="400"/>
