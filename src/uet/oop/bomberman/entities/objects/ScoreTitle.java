@@ -1,22 +1,16 @@
 package uet.oop.bomberman.entities.objects;
 
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import uet.oop.bomberman.graphics.Sprite;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
+import uet.oop.bomberman.controllers.Game;
 
 public class ScoreTitle {
     private static ScoreTitle instance = new ScoreTitle();
     private Font font;
-    private Text timeTexture;
+    private Text currentLevel;
     private Text scoreTexture;
     private Text leftTexture;
     private int bomberLeft;
@@ -28,27 +22,27 @@ public class ScoreTitle {
         try {
 //            font = Font.font("Abyssinica SIL", FontWeight.BOLD, 80);
             this.font = font;
-            timeTexture = new Text();
+            currentLevel = new Text();
             scoreTexture = new Text();
             leftTexture = new Text();
-            timeTexture.setText("TIME:");
-            timeTexture.setFont(font);
-            timeTexture.setFill(Color.DIMGRAY);
-            timeTexture.setX(48);
-            timeTexture.setY(80);
+            currentLevel.setText("LEVEL ");
+            currentLevel.setFont(font);
+            currentLevel.setFill(Color.DIMGRAY);
+            currentLevel.setX(48);
+            currentLevel.setY(80);
 
-            scoreTexture.setText("SCORE:");
+            scoreTexture.setText("SCORE ");
             scoreTexture.setFont(font);
             scoreTexture.setFill(Color.DIMGRAY);
             scoreTexture.setX(700);
             scoreTexture.setY(80);
 
-            leftTexture.setText("LEFT:");
+            leftTexture.setText("LEFT ");
             leftTexture.setFont(font);
             leftTexture.setFill(Color.DIMGRAY);
-            leftTexture.setX(1150);
+            leftTexture.setX(1100);
             leftTexture.setY(80);
-            root.getChildren().addAll(timeTexture, scoreTexture, leftTexture);
+            root.getChildren().addAll(currentLevel, scoreTexture, leftTexture);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,9 +55,10 @@ public class ScoreTitle {
     public void update(int bomberLeft, int scoreBomber, Scene scene) {
         setBomberLeft(bomberLeft);
 
-        leftTexture.setText("LEFT:" + bomberLeft);
+        leftTexture.setText("LEFT " + bomberLeft);
         scoreTexture.setText(scoreBomber + "");
         scoreTexture.setX((scene.getWidth() - scoreTexture.getBoundsInLocal().getWidth()) / 2);
+        currentLevel.setText("LEVEL " + Game.getInstance().getCurrentLevel());
     }
 
     public int getBomberLeft() {

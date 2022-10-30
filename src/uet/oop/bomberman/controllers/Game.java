@@ -7,11 +7,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.LifeStatus;
 import uet.oop.bomberman.events.KeyboardEvent;
 import uet.oop.bomberman.graphics.GameMap;
 import uet.oop.bomberman.graphics.GraphicsMGR;
-import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.scenes.LoseGameScene;
 import uet.oop.bomberman.scenes.OpeningScene;
 import uet.oop.bomberman.scenes.InGameScene;
@@ -116,7 +114,7 @@ public class Game {
 
     public void nextLevel() {
         if (currentLevel + 1 <= MAX_LEVEL &&
-                !gameStatus.equals(GameStatus.OPENING)&&
+                !gameStatus.equals(GameStatus.OPENING) &&
                 !gameStatus.equals(GameStatus.PLAYING)) {
             currentLevel++;
             increaseBomberLeft();
@@ -161,6 +159,7 @@ public class Game {
             };
             timer.schedule(timerTask, 0, 1000);
         }
+
         if (gameStatus.equals(GameStatus.OPENING)) {
             if (audioController.isPlaying(AudioController.AudioType.GAME_BGM)) audioController.stopBgm();
 
@@ -186,18 +185,20 @@ public class Game {
             };
             timer.schedule(timerTask, 0, 1000);
         }
+
         if (gameStatus.equals(GameStatus.PLAYING)) {
             if (!audioController.isPlaying(AudioController.AudioType.GAME_BGM)) {
                 audioController.restartBgm();
             }
-
             stage.setScene(inGameScene.getInGameScene());
             getCurrentGameMap().update();
             getCurrentGameMap().getPlayer().updatePauseHandle();
             inGameScene.getScoreTitle().update(getBomberLeft(),
                     getBomberScore(), inGameScene.getInGameScene());
             inGameScene.getPausedText().setVisible(false);
-        } else if (gameStatus.equals(GameStatus.PAUSED)) {
+        }
+
+        if (gameStatus.equals(GameStatus.PAUSED)) {
             getCurrentGameMap().getPlayer().updatePauseHandle();
             inGameScene.getPausedText().setVisible(true);
         }
@@ -218,10 +219,9 @@ public class Game {
                     if (count > 0) {
                         count--;
                     } else {
-                        if (gameStatus.equals(GameStatus.LOSE)){
+                        if (gameStatus.equals(GameStatus.LOSE)) {
                             timer.cancel();
                             gameStatus = GameStatus.OPENING;
-                            System.out.println("oke");
                         }
                     }
                 }
@@ -310,5 +310,9 @@ public class Game {
 
     public AudioController getAudioController() {
         return audioController;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
     }
 }

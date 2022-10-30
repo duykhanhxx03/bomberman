@@ -167,7 +167,6 @@ public class Bomb extends Entity implements IObstacle {
                 bomb = (Bomb) gameMap.getPlayer().getBombAtPosition(i * Sprite.SCALED_SIZE,
                         yUnit * Sprite.SCALED_SIZE);
                 if (this.getBombStatus().equals(BombStatus.WENTOFF)
-                        && this.getIndexBombSprite() == 3
                         && bomb.getBombStatus().equals(BombStatus.WAIT)) {
                     bomb.setBombStatus(BombStatus.WENTOFF);
                     bomb.setWentOffPhrase(WentOffPhraseStatus.OPENING);

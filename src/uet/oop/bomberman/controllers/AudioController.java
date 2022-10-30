@@ -3,7 +3,8 @@ package uet.oop.bomberman.controllers;
 public class AudioController {
     public enum AudioType {
         GAME_BGM, BOMB_DESTROY, BOMB_PLANTED, ENEMY_DIE, ITEM_COLLECTED,
-        MENU_START, STAGE_START, PLAYER_DIE, PLAYER_WIN, PLAYER_LOSE, PLAYER_MOVING_HORIZONTAL, PLAYER_MOVING_VERTICAL, SIZE
+        MENU_START, STAGE_START, PLAYER_DIE, PLAYER_WIN, PLAYER_LOSE,
+        PLAYER_MOVING_HORIZONTAL, PLAYER_MOVING_VERTICAL, SIZE
     }
 
     private static final AudioController instance = new AudioController();

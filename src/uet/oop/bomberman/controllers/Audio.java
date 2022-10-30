@@ -50,6 +50,8 @@ public class Audio {
             if (!isPlaying()) {
                 clip.setMicrosecondPosition(0);
                 playBgm();
+            }else{
+                clip.setMicrosecondPosition(0);
             }
         } catch (Exception e) {
             e.printStackTrace();
