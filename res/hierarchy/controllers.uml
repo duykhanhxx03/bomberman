@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>uet.oop.bomberman.controllers</OriginalElement>
+  <nodes>
+    <node x="13.60000617494893" y="362.915251787967">uet.oop.bomberman.controllers.ItemInfo</node>
+    <node x="287.1749905870457" y="309.5056145137439">uet.oop.bomberman.controllers.Audio</node>
+    <node x="509.7499749991425" y="33.97035202682463">uet.oop.bomberman.controllers.BombFlameInfo</node>
+    <node x="-369.23257713137025" y="33.970352026824685">uet.oop.bomberman.controllers.Game</node>
+    <node x="13.60000617494893" y="33.97035202682463">uet.oop.bomberman.controllers.CollisionDetector</node>
+    <node x="286.0139228146014" y="541.0408770006633">uet.oop.bomberman.controllers.AudioController</node>
+    <node x="572.4445131702083" y="677.0408770006633">uet.oop.bomberman.controllers.GameStatus</node>
+    <node x="564.4278394542539" y="484.5367207145207">uet.oop.bomberman.controllers.AudioController.AudioType</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="uet.oop.bomberman.controllers.Game" target="uet.oop.bomberman.controllers.AudioController" relationship="TO_ONE">
+      <point x="122.5" y="-123.96473751308076" />
+      <point x="473.6749905870457" y="292.0056145137439" />
+      <point x="74.66106777244431" y="-118.0" />
+    </edge>
+    <edge source="uet.oop.bomberman.controllers.AudioController" target="uet.oop.bomberman.controllers.Audio" relationship="CREATE">
+      <point x="0.0" y="-118.0" />
+      <point x="27.338932227555688" y="84.0" />
+    </edge>
+    <edge source="uet.oop.bomberman.controllers.Game" target="uet.oop.bomberman.controllers.GameStatus" relationship="TO_ONE">
+      <point x="15.0" y="382.0" />
+      <point x="-231.73257713137025" y="830.4703520268247" />
+      <point x="670.4445131702083" y="830.4703520268247" />
+      <point x="0.0" y="50.0" />
+    </edge>
+    <edge source="uet.oop.bomberman.controllers.AudioController" target="uet.oop.bomberman.controllers.Audio" relationship="TO_MANY">
+      <point x="-27.338932227555688" y="-118.0" />
+      <point x="0.0" y="84.0" />
+    </edge>
+    <edge source="uet.oop.bomberman.controllers.AudioController.AudioType" target="uet.oop.bomberman.controllers.AudioController" relationship="INNER_CLASS">
+      <point x="-95.0" y="0.0" />
+      <point x="653.7192234544086" y="534.5367207145207" />
+      <point x="653.7192234544086" y="659.0408770006633" />
+      <point x="113.0" y="0.0" />
+    </edge>
+    <edge source="uet.oop.bomberman.controllers.Game" target="uet.oop.bomberman.controllers.ItemInfo" relationship="TO_ONE">
+      <point x="122.5" y="178.94489976114232" />
+      <point x="-110.0" y="15.0" />
+    </edge>
+    <edge source="uet.oop.bomberman.controllers.Game" target="uet.oop.bomberman.controllers.ItemInfo" relationship="CREATE">
+      <point x="122.5" y="163.94489976114232" />
+      <point x="-110.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.079243022602398" showDependencies="true" x="135.4627579661019" y="454.00959999999986" />
+  <SelectedNodes>
+    <node>uet.oop.bomberman.controllers.ItemInfo</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

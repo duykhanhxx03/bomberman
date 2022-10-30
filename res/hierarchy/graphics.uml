@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>uet.oop.bomberman.graphics</OriginalElement>
+  <nodes>
+    <node x="315.5" y="-15.0">uet.oop.bomberman.graphics.SpriteSheet</node>
+    <node x="-70.0" y="-15.0">uet.oop.bomberman.graphics.GameMap</node>
+    <node x="249.0" y="112.0">uet.oop.bomberman.graphics.Sprite</node>
+    <node x="597.0" y="-15.0">uet.oop.bomberman.graphics.GraphicsMGR</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="uet.oop.bomberman.graphics.Sprite" target="uet.oop.bomberman.graphics.SpriteSheet" relationship="TO_ONE">
+      <point x="0.0" y="-149.5" />
+      <point x="0.0" y="38.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.8173160173160174" showDependencies="true" x="408.99322033898306" y="369.06197033898286" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

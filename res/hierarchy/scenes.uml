@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>uet.oop.bomberman.scenes</OriginalElement>
+  <nodes>
+    <node x="456.1571421356959" y="333.26173609797985">uet.oop.bomberman.scenes.StartMenuScene</node>
+    <node x="549.7445348773589" y="208.44549475965778">uet.oop.bomberman.scenes.StartMenuScene.MenuItem</node>
+    <node x="-114.37247476322955" y="237.65035996968655">uet.oop.bomberman.scenes.OpeningScene</node>
+    <node x="315.7234173844582" y="154.60857390253602">uet.oop.bomberman.scenes.StartMenuScene.MenuBox</node>
+    <node x="699.1275837098632" y="362.25215071180264">uet.oop.bomberman.scenes.WinGameScene</node>
+    <node x="699.1275837098632" y="-42.4464206960111">uet.oop.bomberman.scenes.InGameScene</node>
+    <node x="142.1376085343257" y="122.34157695880266">uet.oop.bomberman.scenes.StartMenuScene.Title</node>
+    <node x="206.50725910734397" y="259.6503599696865">uet.oop.bomberman.scenes.LoseGameScene</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="uet.oop.bomberman.scenes.StartMenuScene.Title" target="uet.oop.bomberman.scenes.StartMenuScene" relationship="INNER_CLASS">
+      <point x="56.50039146567432" y="-12.232576958802667" />
+      <point x="520.0" y="137.10899999999998" />
+      <point x="520.0" y="279.945" />
+      <point x="557.245" y="279.945" />
+      <point x="10.087857864304112" y="-83.49973609797985" />
+    </edge>
+    <edge source="uet.oop.bomberman.scenes.StartMenuScene.MenuBox" target="uet.oop.bomberman.scenes.StartMenuScene" relationship="INNER_CLASS">
+      <point x="86.99958261554184" y="4.260974639933579E-4" />
+      <point x="520.0" y="193.109" />
+      <point x="520.0" y="279.945" />
+      <point x="557.245" y="279.945" />
+      <point x="10.087857864304112" y="-83.49973609797985" />
+    </edge>
+    <edge source="uet.oop.bomberman.scenes.StartMenuScene.MenuItem" target="uet.oop.bomberman.scenes.StartMenuScene" relationship="INNER_CLASS">
+      <point x="-72.99953487735888" y="-4.947596577888902E-4" />
+      <point x="520.0" y="235.445" />
+      <point x="520.0" y="279.945" />
+      <point x="557.245" y="279.945" />
+      <point x="10.087857864304112" y="-83.49973609797985" />
+    </edge>
+    <edge source="uet.oop.bomberman.scenes.StartMenuScene" target="uet.oop.bomberman.scenes.StartMenuScene.MenuItem" relationship="CREATE">
+      <point x="75.587392741663" y="-83.5" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="uet.oop.bomberman.scenes.StartMenuScene" target="uet.oop.bomberman.scenes.StartMenuScene.MenuBox" relationship="CREATE">
+      <point x="-83.5" y="-83.5" />
+      <point x="60.93372475123772" y="38.5" />
+    </edge>
+    <edge source="uet.oop.bomberman.scenes.StartMenuScene" target="uet.oop.bomberman.scenes.StartMenuScene.Title" relationship="CREATE">
+      <point x="-91.0" y="59.95466089944156" />
+      <point x="156.19664024700543" y="476.7163969974214" />
+      <point x="-42.44096828732025" y="27.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0734632683658172" showDependencies="true" x="555.0275837988827" y="240.7671089385475" />
+  <SelectedNodes>
+    <node>uet.oop.bomberman.scenes.InGameScene</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

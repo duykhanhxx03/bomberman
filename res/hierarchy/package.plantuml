@@ -1,0 +1,826 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Audio {
+  + Audio(String): 
+  - clip: Clip
+  + playBgm(): void
+  + stop(): void
+  + playSoundEffect(): void
+  + isPlaying(): boolean
+  + stopBgm(): void
+}
+class AudioController {
+  - AudioController(): 
+  - instance: AudioController
+  - audioList: Audio[]
+  + playInGameBgm(): void
+  + stopStartMenuBgm(): void
+  + getInstance(): AudioController
+  + stopInMainBgm(): void
+  + playStartMenuBgm(): void
+  + isPlaying(AudioType): boolean
+  + playSoundEffect(AudioType): void
+}
+enum AudioType << enumeration >> {
+  + AudioType(): 
+  + ITEM_COLLECTED: 
+  + STAGE_CLEAR: 
+  + BOMB_DESTROY: 
+  + PLAYER_WIN: 
+  + PLAYER_MOVING_VERTICAL: 
+  + GAME_BGM: 
+  + BOMB_PLANTED: 
+  + SIZE: 
+  + PLAYER_LOSE: 
+  + PLAYER_MOVING_HORIZONTAL: 
+  + PLAYER_DIE: 
+  + STAGE_START: 
+  + ENEMY_DIE: 
+  + MENU_START: 
+  + valueOf(String): AudioType
+  + values(): AudioType[]
+}
+class Ballom {
+  + Ballom(int, int, Image, GameMap, CollisionDetector): 
+  + Ballom(int, int, Image): 
+  - prevX: int
+  - prevY: int
+  - score: int
+  - stepLeft: int
+  + getRandomStepLeft(): int
+  + update(): void
+  + updatePosition(): void
+  + getRandomDirectionStatus(): DirectionStatus
+  + getScore(): int
+}
+class Bomb {
+  + Bomb(int, int, Image, int, GameMap, boolean): 
+  - bombStatus: BombStatus
+  - rightFlameList: List<Entity>
+  - rightFlameInfo: BombFlameInfo
+  - isAllowedToGoThrough: boolean
+  - bombLevel: int
+  - leftFlameList: List<Entity>
+  - leftFlameInfo: BombFlameInfo
+  - upFlameInfo: BombFlameInfo
+  - downFlameList: List<Entity>
+  - timer: Timer
+  - downFlameInfo: BombFlameInfo
+  - wentOffPhrase: WentOffPhraseStatus
+  ~ gameMap: GameMap
+  - indexBombSprite: int
+  - upFlameList: List<Entity>
+  + render(GraphicsContext): void
+  + makeRightFlame(int, int): void
+  + checkRightFlame(int, int): void
+  + checkDownFlame(int, int): void
+  + getUpFlameList(): List<Entity>
+  + update(): void
+  + isAllowedToGoThrough(): boolean
+  + getLeftFlameList(): List<Entity>
+  + setAllowedToGoThrough(boolean): void
+  + getRightFlameList(): List<Entity>
+  + setIndexBombSprite(int): void
+  + getBombStatus(): BombStatus
+  + setBombStatus(BombStatus): void
+  + getIndexBombSprite(): int
+  + getDownFlameList(): List<Entity>
+  + updateNearbyBombActivation(): void
+  + makeLeftFlame(int, int): void
+  + checkLeftFlame(int, int): void
+  + setWentOffPhrase(WentOffPhraseStatus): void
+  + makeUpFlame(int, int): void
+  + checkUpFlame(int, int): void
+  + makeDownFlame(int, int): void
+}
+class BombFlameInfo {
+  + BombFlameInfo(): 
+  - brickCheck: boolean
+  - brickExplosion: Entity
+  - intersectionLength: int
+  - bombCheck: boolean
+  - itemCheck: boolean
+  - wallCheck: boolean
+  - flameLength: int
+  + getFlameLength(): int
+  + setFlameLength(int): void
+  + setIntersectionLength(int): void
+  + setBrickCheck(boolean): void
+  + isItemCheck(): boolean
+  + isBombCheck(): boolean
+  + setItemCheck(boolean): void
+  + setBombCheck(boolean): void
+  + isBrickCheck(): boolean
+  + isWallCheck(): boolean
+  + setWallCheck(boolean): void
+  + getBrickExplosion(): Entity
+  + getIntersectionLength(): int
+  + setBrickExplosion(Entity): void
+}
+enum BombStatus << enumeration >> {
+  + BombStatus(): 
+  + WAIT: 
+  + WENTOFF: 
+  + DISAPEAR: 
+  + valueOf(String): BombStatus
+  + values(): BombStatus[]
+}
+class Bomber {
+  + Bomber(int, int, Image): 
+  + Bomber(int, int, Image, KeyboardEvent, CollisionDetector, GameMap): 
+  - isFlamePass: boolean
+  + BOMBER_BOMB_LIST_SIZE_DEFAULT: int
+  - bombList: List<Entity>
+  - collisionDetector: CollisionDetector
+  - isWallPass: boolean
+  - bombLevel: int
+  - MAX_SPEED: int
+  + BOMBER_BOMB_LEVEL_DEFAULT: int
+  - isPlantBomb: boolean
+  - keyboardEvent: KeyboardEvent
+  - indexBomberSprite: int
+  - isBombPass: boolean
+  + REAL_HEIGHT: int
+  - gameMap: GameMap
+  + REAL_WIDTH: int
+  - lifeStatus: LifeStatus
+  + BOMBER_SPEED_DEFAULT: int
+  - isDetonator: boolean
+  + BOMBER_SCORE_DEFAULT: int
+  + BOMBER_LEFT_DEFAULT: int
+  - bombListMaxSize: int
+  + setBombListMaxSize(int): void
+  + updatePlantBomb(): void
+  + getBombListMaxSize(): int
+  + setSpeedRun(int): void
+  + getSpeedRun(): int
+  + setBombLevel(int): void
+  + getBombLevel(): int
+  + increaseBombListMaxSize(): void
+  + setDetonator(boolean): void
+  + initItemInfo(ItemInfo): void
+  + updateBombList(): void
+  + updateDirection(DirectionStatus, boolean, int): void
+  + updatePauseHandle(): void
+  - updateKeyHandle(): void
+  + setWallPass(boolean): void
+  + update(): void
+  + getBombList(): List<Entity>
+  + increaseBombLevel(): void
+  + setFlamePass(boolean): void
+  + getBombAtPosition(int, int): Entity
+  + setBombPass(boolean): void
+  + render(GraphicsContext): void
+}
+class BombermanGame {
+  + BombermanGame(): 
+  + start(Stage): void
+}
+class Brick {
+  + Brick(int, int, Image): 
+  + update(): void
+}
+class CollisionDetector {
+  + CollisionDetector(GameMap): 
+  - gameMap: GameMap
+  + checkCollisionWithBombWhenMove(int, int, List<Entity>, boolean): boolean
+  + checkCollisionWithFlame(int, int, int, int, boolean): boolean
+  + checkCollisionWithMap(int, int, int, int, boolean): boolean
+  + checkCollisionWithBomb(int, int, List<Entity>, int, int): boolean
+  + checkCollisionWithEnemy(int, int, List<Entity>, int, int): boolean
+  + checkCollisionWithItem(int, int, Bomber): void
+  + setMap(GameMap): void
+}
+enum DeadPhaseStatus << enumeration >> {
+  + DeadPhaseStatus(): 
+  + PHASE_NONE: 
+  + PHASE_FIRST: 
+  + PHASE_DISAPPEAR: 
+  + PHASE_SECOND: 
+  + values(): DeadPhaseStatus[]
+  + valueOf(String): DeadPhaseStatus
+}
+enum DirectionStatus << enumeration >> {
+  + DirectionStatus(): 
+  + DOWN: 
+  + LEFT: 
+  + UP: 
+  + RIGHT: 
+  + values(): DirectionStatus[]
+  + valueOf(String): DirectionStatus
+}
+class Doll {
+  + Doll(int, int, Image, GameMap, CollisionDetector): 
+  + Doll(int, int, Image): 
+  - score: int
+  + updatePosition(): void
+  + getScore(): int
+  + update(): void
+  + getRandomDirectionStatus(): DirectionStatus
+}
+class Enemy {
+  + Enemy(int, int, Image): 
+  + REAL_WIDTH: int
+  # deadPhaseStatus: DeadPhaseStatus
+  # gameMap: GameMap
+  + REAL_HEIGHT: int
+  # directionStatus: DirectionStatus
+  # indexEnemySprite: int
+  # lifeStatus: LifeStatus
+  # collisionDetector: CollisionDetector
+  + update(): void
+  + getScore(): int
+  + getDeadPhaseStatus(): DeadPhaseStatus
+  + updatePosition(): void
+  + setDeadPhaseStatus(DeadPhaseStatus): void
+  + getLifeStatus(): LifeStatus
+  + setLifeStatus(LifeStatus): void
+}
+class Entity {
+  + Entity(int, int, Image): 
+  # img: Image
+  # x: int
+  # y: int
+  + setY(int): void
+  + getX(): int
+  + setX(int): void
+  + render(GraphicsContext): void
+  + update(): void
+  + setImg(Image): void
+  + getY(): int
+}
+class Flame {
+  + Flame(int, int, Image): 
+  + update(): void
+}
+class Game {
+  - Game(): 
+  - currentLevel: int
+  - openingScene: OpeningScene
+  - gameStatus: GameStatus
+  - gameMapList: List<GameMap>
+  + MAX_LEVEL: int
+  - keyboardEvent: KeyboardEvent
+  - font: Font
+  ~ timer: AnimationTimer
+  - winGameScene: WinGameScene
+  - bomberLeft: int
+  + audioController: AudioController
+  - inGameScene: InGameScene
+  - startMenuScene: StartMenuScene
+  - instance: Game
+  - itemInfo: ItemInfo
+  - loseGameScene: LoseGameScene
+  - bomberScore: int
+  + gc: GraphicsContext
+  + stage: Stage
+  + renderBomber(GameMap): void
+  + renderBricks(GameMap): void
+  + createMapList(): void
+  + start(): void
+  + setGameStatus(GameStatus): void
+  + getCurrentGameMap(): GameMap
+  + getGameStatus(): GameStatus
+  + getAudioController(): AudioController
+  + nextLevel(): void
+  + setBomberScore(int): void
+  + render(GameMap): void
+  + increaseBomberLeft(): void
+  + decreaseBomberLeft(): void
+  + render(): void
+  + renderBombList(GameMap): void
+  + clrscr(Canvas): void
+  + getInstance(): Game
+  + getItemInfo(): ItemInfo
+  + renderWallAndGrass(GameMap): void
+  + renderItems(GameMap): void
+  + getCurrentLevel(): int
+  + getBomberScore(): int
+  + update(): void
+  + createGame(Stage): void
+  + getBomberLeft(): int
+  + init(): void
+  + renderEnemies(GameMap): void
+}
+class GameMap {
+  + GameMap(): 
+  - wallAndGrass: List<List<Entity>>
+  - bombList: List<Entity>
+  - enemies: List<Entity>
+  - player: Bomber
+  - yUnitBomberInit: int
+  - items: List<Entity>
+  - xUnitBomberInit: int
+  - level: int
+  - mapHeight: int
+  - bricks: List<Entity>
+  - mapWidth: int
+  + setWallAndGrass(List<List<Entity>>): void
+  + getItemAtPosition(int, int): Entity
+  + getPlayer(): Bomber
+  + update(): void
+  + createMap(int, KeyboardEvent): void
+  + getBricks(): List<Entity>
+  + getMapWidth(): int
+  + getEnemies(): List<Entity>
+  + setMapWidth(int): void
+  + setLevel(int): void
+  + setMapHeight(int): void
+  + getWallAndGrass(): List<List<Entity>>
+  + setxUnitBomberInit(int): void
+  + setItems(List<Entity>): void
+  + getItems(): List<Entity>
+  + getBombList(): List<Entity>
+  + getMapHeight(): int
+  + getxUnitBomberInit(): int
+  + getBrickAtPosition(int, int): Entity
+  + setyUnitBomberInit(int): void
+  + getWallsAndGrassAtPosition(int, int): Entity
+  + getLevel(): int
+  + updateEnemyList(): void
+  + getyUnitBomberInit(): int
+  + setBricks(List<Entity>): void
+}
+enum GameStatus << enumeration >> {
+  + GameStatus(): 
+  + OPENING: 
+  + INIT: 
+  + START_MENU: 
+  + PLAYING: 
+  + NEXT_LEVEL_BRIDGE: 
+  + WIN: 
+  + PAUSED: 
+  + LOSE: 
+  + values(): GameStatus[]
+  + valueOf(String): GameStatus
+}
+class GraphicsMGR {
+  + GraphicsMGR(): 
+  + HEIGHT: int
+  + WIDTH: int
+}
+class Grass {
+  + Grass(int, int, Image): 
+  + update(): void
+}
+interface IItem << interface >>
+interface IObstacle << interface >>
+class InGameScene {
+  - InGameScene(): 
+  - scoreTitle: ScoreTitle
+  - instance: InGameScene
+  - pausedText: Text
+  - font: Font
+  - canvas: Canvas
+  - inGameScene: Scene
+  + getInstance(): InGameScene
+  + getScoreTitle(): ScoreTitle
+  + getInGameScene(): Scene
+  + getCanvas(): Canvas
+  + setCanvasSize(int, int): void
+  + createPauseText(): void
+  + getPausedText(): Text
+  + createContent(int, int, Font): void
+  + getGraphicContext(): GraphicsContext
+}
+class ItemBombPass {
+  + ItemBombPass(int, int, Image): 
+  + update(): void
+}
+class ItemBombs {
+  + ItemBombs(int, int, Image): 
+  + update(): void
+}
+class ItemDetonator {
+  + ItemDetonator(int, int, Image): 
+  + update(): void
+}
+class ItemFlamePass {
+  + ItemFlamePass(int, int, Image): 
+  + update(): void
+}
+class ItemFlames {
+  + ItemFlames(int, int, Image): 
+  + update(): void
+}
+class ItemInfo {
+  + ItemInfo(): 
+  - isDetonator: boolean
+  - itemSpeedCount: int
+  - isFlamePass: boolean
+  - itemFlamesCount: int
+  - itemBombsCount: int
+  - isBombPass: boolean
+  - isWallPass: boolean
+  + setBombPass(boolean): void
+  + increaseItemBombsCount(): void
+  + getItemSpeedCount(): int
+  + getItemFlamesCount(): int
+  + isFlamePass(): boolean
+  + getItemBombsCount(): int
+  + isDetonator(): boolean
+  + increaseItemFlamesCount(): void
+  + isWallPass(): boolean
+  + increaseItemSpeedCount(): void
+  + setDetonator(boolean): void
+  + isBombPass(): boolean
+  + setWallPass(boolean): void
+  + setFlamePass(boolean): void
+}
+class ItemSpeed {
+  + ItemSpeed(int, int, Image): 
+  + setImg(Image): void
+  + render(GraphicsContext): void
+  + update(): void
+}
+class ItemWallPass {
+  + ItemWallPass(int, int, Image): 
+  + update(): void
+}
+class KeyboardEvent {
+  + KeyboardEvent(Scene): 
+  - isKeySpace: boolean
+  - isKeyUp: boolean
+  - isKeyP: boolean
+  - isKeyLeft: boolean
+  - isKeyDown: boolean
+  - isKeyB: boolean
+  - isKeyR: boolean
+  - isKeyRight: boolean
+  + isPressed(KeyCode): boolean
+  + handle(KeyEvent): void
+}
+class Kondoria {
+  + Kondoria(int, int, Image, GameMap, CollisionDetector): 
+  + Kondoria(int, int, Image): 
+  - stepLeft: int
+  - prevY: int
+  - score: int
+  - prevX: int
+  + updatePosition(): void
+  + getScore(): int
+  + getRandomDirectionStatus(): DirectionStatus
+  + update(): void
+  + getRandomStepLeft(): int
+}
+enum LifeStatus << enumeration >> {
+  + LifeStatus(): 
+  + ALIVE: 
+  + DEAD: 
+  + valueOf(String): LifeStatus
+  + values(): LifeStatus[]
+}
+class LoseGameScene {
+  - LoseGameScene(): 
+  - instance: LoseGameScene
+  - loseGameScene: Scene
+  + getLoseGameScene(): Scene
+  + getInstance(): LoseGameScene
+  + createContent(int, int, Font): void
+}
+class Main {
+  + Main(): 
+  + main(String[]): void
+}
+class MenuBox {
+  + MenuBox(MenuItem[]): 
+  - createSeparator(): Line
+}
+class MenuItem {
+  + MenuItem(String): 
+}
+class Minvo {
+  + Minvo(int, int, Image): 
+  + Minvo(int, int, Image, GameMap, CollisionDetector): 
+  - stepLeft: int
+  - prevX: int
+  - score: int
+  - prevY: int
+  + getRandomDirectionStatus(): DirectionStatus
+  + getScore(): int
+  + update(): void
+  + updatePosition(): void
+  + getRandomStepLeft(): int
+}
+class MovingEntity {
+  + MovingEntity(int, int, Image): 
+  # speedRun: int
+  + directionStatus: DirectionStatus
+  # isMoving: boolean
+  + setSpeedRun(int): void
+  + moveLeft(int): void
+  + getSpeedRun(): int
+  + update(): void
+  + moveRight(int): void
+  + updateDirection(DirectionStatus, boolean, int): void
+  + moveDown(int): void
+  + moveUp(int): void
+}
+class Oneal {
+  + Oneal(int, int, Image): 
+  + Oneal(int, int, Image, GameMap, CollisionDetector): 
+  - prevX: int
+  - stepLeft: int
+  - prevY: int
+  - score: int
+  + update(): void
+  + getRandomDirectionStatus(): DirectionStatus
+  + getRandomSpeed(): int
+  + getRandomStepLeft(): int
+  + updatePosition(): void
+  + getScore(): int
+}
+class OpeningScene {
+  - OpeningScene(): 
+  - instance: OpeningScene
+  - openingScene: Scene
+  - stageNumber: Text
+  + getInstance(): OpeningScene
+  + createContent(int, int, Font): void
+  + getOpeningScene(): Scene
+  + updateStageNumber(int): void
+}
+class Portal {
+  + Portal(int, int, Image): 
+  + update(): void
+}
+class ScoreTitle {
+  - ScoreTitle(): 
+  - instance: ScoreTitle
+  - scoreTexture: Text
+  - currentLevel: Text
+  - leftTexture: Text
+  - bomberLeft: int
+  + getInstance(): ScoreTitle
+  + update(int, int, Scene): void
+  + createScoreTitle(Group, Font): void
+  + getBomberLeft(): int
+  + setBomberLeft(int): void
+}
+class Sprite {
+  + Sprite(int, int, int, SpriteSheet, int, int): 
+  + Sprite(int, int): 
+  + explosion_vertical_down_last1: Sprite
+  + explosion_horizontal: Sprite
+  + doll_dead: Sprite
+  + kondoria_right2: Sprite
+  - _y: int
+  + bomb_2: Sprite
+  + explosion_vertical: Sprite
+  + explosion_vertical_top_last: Sprite
+  + kondoria_right3: Sprite
+  + player_left_1: Sprite
+  + SIZE: int
+  + balloom_right3: Sprite
+  + kondoria_dead: Sprite
+  + powerup_speed: Sprite
+  + _pixels: int[]
+  - _sheet: SpriteSheet
+  + minvo_dead: Sprite
+  + DEFAULT_SIZE: int
+  + player_right_2: Sprite
+  + explosion_vertical_top_last2: Sprite
+  + player_down_2: Sprite
+  + doll_left1: Sprite
+  + player_up: Sprite
+  + minvo_right1: Sprite
+  - _x: int
+  + brick: Sprite
+  + oneal_dead: Sprite
+  + balloom_right2: Sprite
+  # _realWidth: int
+  + explosion_horizontal_right_last2: Sprite
+  + oneal_left3: Sprite
+  + kondoria_right1: Sprite
+  + title_background: Sprite
+  + powerup_bombpass: Sprite
+  + explosion_horizontal_right_last: Sprite
+  + player_down: Sprite
+  + brick_exploded2: Sprite
+  + explosion_horizontal1: Sprite
+  + player_right: Sprite
+  + player_right_1: Sprite
+  + balloom_left1: Sprite
+  + minvo_left2: Sprite
+  + player_down_1: Sprite
+  + explosion_vertical2: Sprite
+  + player_dead3: Sprite
+  + doll_right3: Sprite
+  # _realHeight: int
+  + powerup_wallpass: Sprite
+  + SCALED_SIZE: int
+  + balloom_left3: Sprite
+  + balloom_right1: Sprite
+  + oneal_left1: Sprite
+  + bomb_exploded: Sprite
+  + oneal_right2: Sprite
+  + kondoria_left2: Sprite
+  + explosion_vertical_down_last: Sprite
+  + oneal_left2: Sprite
+  + player_up_2: Sprite
+  + bomb_exploded1: Sprite
+  + balloom_dead: Sprite
+  + minvo_right3: Sprite
+  + explosion_horizontal_left_last2: Sprite
+  + powerup_detonator: Sprite
+  + oneal_right1: Sprite
+  + minvo_left3: Sprite
+  + powerup_bombs: Sprite
+  - image: Image
+  + doll_left3: Sprite
+  + mob_dead1: Sprite
+  - TRANSPARENT_COLOR: int
+  + portal: Sprite
+  + balloom_left2: Sprite
+  + player_dead1: Sprite
+  + kondoria_left3: Sprite
+  + explosion_horizontal_left_last: Sprite
+  + powerup_flamepass: Sprite
+  + bomb: Sprite
+  + doll_left2: Sprite
+  + minvo_left1: Sprite
+  + explosion_horizontal2: Sprite
+  + player_left_2: Sprite
+  + mob_dead2: Sprite
+  + explosion_horizontal_left_last1: Sprite
+  + bomb_1: Sprite
+  + explosion_vertical_top_last1: Sprite
+  + oneal_right3: Sprite
+  + wall: Sprite
+  + powerup_flames: Sprite
+  + explosion_vertical1: Sprite
+  + mob_dead3: Sprite
+  + player_left: Sprite
+  + brick_exploded1: Sprite
+  + player_dead2: Sprite
+  + minvo_right2: Sprite
+  + kondoria_left1: Sprite
+  + explosion_horizontal_right_last1: Sprite
+  + doll_right2: Sprite
+  + explosion_vertical_down_last2: Sprite
+  + bomb_exploded2: Sprite
+  + brick_exploded: Sprite
+  + grass: Sprite
+  + doll_right1: Sprite
+  + player_up_1: Sprite
+  - load(): void
+  - resample(Image, int): Image
+  - setColor(int): void
+  + movingSprite(Sprite, Sprite, int, int): Sprite
+  + getPixel(int): int
+  + getImage(): Image
+  + movingSprite(Sprite, Sprite, Sprite, int, int): Sprite
+  + getSize(): int
+  + getFxImage(): Image
+}
+class SpriteSheet {
+  + SpriteSheet(String, int): 
+  + image: BufferedImage
+  + tiles: SpriteSheet
+  - _path: String
+  + _pixels: int[]
+  + SIZE: int
+  - load(): void
+}
+class StartMenuScene {
+  - StartMenuScene(): 
+  - startMenuScene: Scene
+  - instance: StartMenuScene
+  + getInstance(): StartMenuScene
+  - createContent(): Parent
+  + getStartMenuScene(): Scene
+}
+class Title {
+  + Title(String): 
+}
+class TitleBackground {
+  + TitleBackground(int, int, Image): 
+  + update(): void
+}
+class Wall {
+  + Wall(int, int, Image): 
+  + update(): void
+}
+enum WentOffPhraseStatus << enumeration >> {
+  + WentOffPhraseStatus(): 
+  + OPENING: 
+  + CLOSING: 
+  + values(): WentOffPhraseStatus[]
+  + valueOf(String): WentOffPhraseStatus
+}
+class WinGameScene {
+  - WinGameScene(): 
+  - instance: WinGameScene
+  - winGameScene: Scene
+  + getInstance(): WinGameScene
+  + getWinGameScene(): Scene
+  + createContent(int, int, Font): void
+}
+
+AudioController     "1" *-[#595959,plain]-> "audioList\n*" Audio               
+AudioController      -[#595959,dashed]->  Audio               : "«create»"
+AudioType            +-[#820000,plain]-  AudioController     
+Ballom               -[#000082,plain]-^  Enemy               
+Bomb                "1" *-[#595959,plain]-> "upFlameInfo\n1" BombFlameInfo       
+Bomb                 -[#595959,dashed]->  BombFlameInfo       : "«create»"
+Bomb                "1" *-[#595959,plain]-> "bombStatus\n1" BombStatus          
+Bomb                 -[#000082,plain]-^  Entity              
+Bomb                "1" *-[#595959,plain]-> "upFlameList\n*" Entity              
+Bomb                "1" *-[#595959,plain]-> "gameMap\n1" GameMap             
+Bomb                 -[#008200,dashed]-^  IObstacle           
+Bomb                 -[#595959,dashed]->  ItemFlames          : "«create»"
+Bomb                "1" *-[#595959,plain]-> "wentOffPhrase\n1" WentOffPhraseStatus 
+BombFlameInfo       "1" *-[#595959,plain]-> "brickExplosion\n1" Entity              
+BombStatus           +-[#820000,plain]-  Bomb                
+Bomber               -[#595959,dashed]->  Bomb                : "«create»"
+Bomber              "1" *-[#595959,plain]-> "collisionDetector\n1" CollisionDetector   
+Bomber              "1" *-[#595959,plain]-> "bombList\n*" Entity              
+Bomber              "1" *-[#595959,plain]-> "gameMap\n1" GameMap             
+Bomber              "1" *-[#595959,plain]-> "keyboardEvent\n1" KeyboardEvent       
+Bomber              "1" *-[#595959,plain]-> "lifeStatus\n1" LifeStatus          
+Bomber               -[#000082,plain]-^  MovingEntity        
+Brick                -[#000082,plain]-^  Entity              
+Brick                -[#008200,dashed]-^  IObstacle           
+CollisionDetector   "1" *-[#595959,plain]-> "gameMap\n1" GameMap             
+DeadPhaseStatus      +-[#820000,plain]-  Enemy               
+Doll                 -[#000082,plain]-^  Enemy               
+Enemy               "1" *-[#595959,plain]-> "collisionDetector\n1" CollisionDetector   
+Enemy               "1" *-[#595959,plain]-> "deadPhaseStatus\n1" DeadPhaseStatus     
+Enemy               "1" *-[#595959,plain]-> "directionStatus\n1" DirectionStatus     
+Enemy               "1" *-[#595959,plain]-> "gameMap\n1" GameMap             
+Enemy                -[#008200,dashed]-^  IObstacle           
+Enemy               "1" *-[#595959,plain]-> "lifeStatus\n1" LifeStatus          
+Enemy                -[#000082,plain]-^  MovingEntity        
+Flame                -[#000082,plain]-^  Entity              
+Game                "1" *-[#595959,plain]-> "audioController\n1" AudioController     
+Game                 -[#595959,dashed]->  GameMap             : "«create»"
+Game                "1" *-[#595959,plain]-> "gameMapList\n*" GameMap             
+Game                "1" *-[#595959,plain]-> "gameStatus\n1" GameStatus          
+Game                "1" *-[#595959,plain]-> "inGameScene\n1" InGameScene         
+Game                "1" *-[#595959,plain]-> "itemInfo\n1" ItemInfo            
+Game                 -[#595959,dashed]->  ItemInfo            : "«create»"
+Game                 -[#595959,dashed]->  KeyboardEvent       : "«create»"
+Game                "1" *-[#595959,plain]-> "keyboardEvent\n1" KeyboardEvent       
+Game                "1" *-[#595959,plain]-> "loseGameScene\n1" LoseGameScene       
+Game                "1" *-[#595959,plain]-> "openingScene\n1" OpeningScene        
+Game                "1" *-[#595959,plain]-> "startMenuScene\n1" StartMenuScene      
+Game                "1" *-[#595959,plain]-> "winGameScene\n1" WinGameScene        
+GameMap              -[#595959,dashed]->  Ballom              : "«create»"
+GameMap              -[#595959,dashed]->  Bomber              : "«create»"
+GameMap             "1" *-[#595959,plain]-> "player\n1" Bomber              
+GameMap              -[#595959,dashed]->  Brick               : "«create»"
+GameMap              -[#595959,dashed]->  CollisionDetector   : "«create»"
+GameMap              -[#595959,dashed]->  Doll                : "«create»"
+GameMap             "1" *-[#595959,plain]-> "bricks\n*" Entity              
+GameMap              -[#595959,dashed]->  Grass               : "«create»"
+GameMap              -[#595959,dashed]->  ItemBombPass        : "«create»"
+GameMap              -[#595959,dashed]->  ItemBombs           : "«create»"
+GameMap              -[#595959,dashed]->  ItemDetonator       : "«create»"
+GameMap              -[#595959,dashed]->  ItemFlamePass       : "«create»"
+GameMap              -[#595959,dashed]->  ItemFlames          : "«create»"
+GameMap              -[#595959,dashed]->  ItemSpeed           : "«create»"
+GameMap              -[#595959,dashed]->  ItemWallPass        : "«create»"
+GameMap              -[#595959,dashed]->  Kondoria            : "«create»"
+GameMap              -[#595959,dashed]->  Minvo               : "«create»"
+GameMap              -[#595959,dashed]->  Oneal               : "«create»"
+GameMap              -[#595959,dashed]->  Portal              : "«create»"
+GameMap              -[#595959,dashed]->  TitleBackground     : "«create»"
+GameMap              -[#595959,dashed]->  Wall                : "«create»"
+Grass                -[#000082,plain]-^  Entity              
+InGameScene         "1" *-[#595959,plain]-> "scoreTitle\n1" ScoreTitle          
+ItemBombPass         -[#000082,plain]-^  Entity              
+ItemBombPass         -[#008200,dashed]-^  IItem               
+ItemBombs            -[#000082,plain]-^  Entity              
+ItemBombs            -[#008200,dashed]-^  IItem               
+ItemDetonator        -[#000082,plain]-^  Entity              
+ItemDetonator        -[#008200,dashed]-^  IItem               
+ItemFlamePass        -[#000082,plain]-^  Entity              
+ItemFlamePass        -[#008200,dashed]-^  IItem               
+ItemFlames           -[#000082,plain]-^  Entity              
+ItemFlames           -[#008200,dashed]-^  IItem               
+ItemSpeed            -[#000082,plain]-^  Entity              
+ItemSpeed            -[#008200,dashed]-^  IItem               
+ItemWallPass         -[#000082,plain]-^  Entity              
+ItemWallPass         -[#008200,dashed]-^  IItem               
+Kondoria             -[#000082,plain]-^  Enemy               
+MenuBox              +-[#820000,plain]-  StartMenuScene      
+MenuItem             +-[#820000,plain]-  StartMenuScene      
+Minvo                -[#000082,plain]-^  Enemy               
+MovingEntity        "1" *-[#595959,plain]-> "directionStatus\n1" DirectionStatus     
+MovingEntity         -[#000082,plain]-^  Entity              
+Oneal                -[#000082,plain]-^  Enemy               
+Portal               -[#000082,plain]-^  Entity              
+Sprite              "1" *-[#595959,plain]-> "_sheet\n1" SpriteSheet         
+StartMenuScene       -[#595959,dashed]->  MenuBox             : "«create»"
+StartMenuScene       -[#595959,dashed]->  MenuItem            : "«create»"
+StartMenuScene       -[#595959,dashed]->  Title               : "«create»"
+Title                +-[#820000,plain]-  StartMenuScene      
+TitleBackground      -[#000082,plain]-^  Entity              
+Wall                 -[#000082,plain]-^  Entity              
+Wall                 -[#008200,dashed]-^  IObstacle           
+WentOffPhraseStatus  +-[#820000,plain]-  Bomb                
+@enduml
