@@ -52,7 +52,10 @@ public class CollisionDetector {
         return false;
     }
 
-    public boolean checkCollisionWithFlame(int x, int y, int REAL_WIDTH, int REAL_HEIGHT) {
+    public boolean checkCollisionWithFlame(int x, int y, int REAL_WIDTH, int REAL_HEIGHT, boolean isFlamePass) {
+        if (isFlamePass){
+            return false;
+        }
         final int FIX_POSITION = 6;
         Rectangle rectBlock = new Rectangle(x, y, REAL_WIDTH, REAL_HEIGHT);
         for (Entity element : gameMap.getBombList()) {
@@ -158,6 +161,14 @@ public class CollisionDetector {
                     }
                     bomber.setBombPass(true);
                     gameInstance.getItemInfo().setBombPass(true);
+                    delPos = i;
+                }
+                if (gameMap.getItems().get(i) instanceof ItemFlamePass) {
+                    if (!Game.getInstance().getAudioController().isPlaying(AudioController.AudioType.ITEM_COLLECTED)) {
+                        Game.getInstance().getAudioController().playSoundEffect(AudioController.AudioType.ITEM_COLLECTED);
+                    }
+                    bomber.setFlamePass(true);
+                    gameInstance.getItemInfo().setFlamePass(true);
                     delPos = i;
                 }
                 if (gameMap.getItems().get(i) instanceof Portal

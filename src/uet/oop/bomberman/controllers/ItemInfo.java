@@ -10,6 +10,8 @@ public class ItemInfo {
     private boolean isWallPass;
     private boolean isBombPass;
 
+    private boolean isFlamePass;
+
     public void increaseItemSpeedCount() {
         itemSpeedCount++;
     }
@@ -28,6 +30,10 @@ public class ItemInfo {
 
     public void setBombPass(boolean bombPass) {
         isBombPass = bombPass;
+    }
+
+    public void setFlamePass(boolean flamePass) {
+        isFlamePass = flamePass;
     }
 
     public ItemInfo() {
@@ -52,6 +58,10 @@ public class ItemInfo {
 
     public boolean isBombPass() {
         return isBombPass;
+    }
+
+    public boolean isFlamePass() {
+        return isFlamePass;
     }
 
     public boolean isWallPass() {

@@ -55,6 +55,8 @@ public class Bomber extends MovingEntity {
 
     private boolean isBombPass = false;
 
+    private boolean isFlamePass = false;
+
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
     }
@@ -74,6 +76,7 @@ public class Bomber extends MovingEntity {
         setBombListMaxSize(itemInfo.getItemBombsCount());
         setWallPass(itemInfo.isWallPass());
         setBombPass(itemInfo.isBombPass());
+        setFlamePass(itemInfo.isFlamePass());
     }
 
     private void updateKeyHandle() {
@@ -99,7 +102,7 @@ public class Bomber extends MovingEntity {
             collisionDetector.checkCollisionWithItem(this.x, this.y, this);
 
             //collision check with flame and enemy
-            if (collisionDetector.checkCollisionWithFlame(this.x, this.y, REAL_WIDTH, REAL_HEIGHT)
+            if (collisionDetector.checkCollisionWithFlame(this.x, this.y, REAL_WIDTH, REAL_HEIGHT, isFlamePass)
                     || collisionDetector.checkCollisionWithEnemy(this.x, this.y, gameMap.getEnemies(),
                     Bomber.REAL_WIDTH, Bomber.REAL_HEIGHT)) {
                 if (!instance.isPlaying(AudioController.AudioType.PLAYER_DIE)
@@ -456,5 +459,12 @@ public class Bomber extends MovingEntity {
 
     public void setBombPass(boolean bombPass) {
         isBombPass = bombPass;
+    }
+
+    public void setFlamePass(boolean flamePass) {
+        isFlamePass = flamePass;
+    }
+    public boolean isFlamePass() {
+        return isFlamePass;
     }
 }

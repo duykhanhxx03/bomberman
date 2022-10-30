@@ -41,5 +41,6 @@ f - Flame Item
 s - Speed Item
 w - Wall Pass Item
 c - Bomb Pass Item
+k - Flame Pass Item
 
 Kí tự khác các kí tự trên - Grass

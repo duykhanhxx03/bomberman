@@ -37,7 +37,7 @@ public class Doll extends Enemy {
 
     public void updatePosition() {
         if (lifeStatus.equals(LifeStatus.ALIVE)) {
-            if (collisionDetector.checkCollisionWithFlame(x, y, REAL_WIDTH, REAL_HEIGHT)) {
+            if (collisionDetector.checkCollisionWithFlame(x, y, REAL_WIDTH, REAL_HEIGHT, false)) {
                 if (!Game.getInstance().getAudioController().isPlaying(AudioController.AudioType.ENEMY_DIE)) {
                     Game.getInstance().getAudioController().playSoundEffect(AudioController.AudioType.ENEMY_DIE);
                 }
