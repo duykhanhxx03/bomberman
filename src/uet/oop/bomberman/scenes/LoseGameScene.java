@@ -9,7 +9,6 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class LoseGameScene {
     private Scene loseGameScene;
-    private Text gameOverText;
 
     private static final LoseGameScene instance = new LoseGameScene();
 
@@ -21,9 +20,9 @@ public class LoseGameScene {
 
     }
 
-    public void createLoseGameScene(int sceneWidth, int sceneHeight, Font font) {
+    public void createContent(int sceneWidth, int sceneHeight, Font font) {
         BorderPane borderPane = new BorderPane();
-        gameOverText = new Text("GAME OVER");
+        Text gameOverText = new Text("GAME OVER");
         gameOverText.setFont(font);
         gameOverText.setFill(Color.GHOSTWHITE);
         borderPane.setCenter(gameOverText);

@@ -7,9 +7,9 @@ public class BombFlameInfo {
     private boolean itemCheck;
     private boolean wallCheck;
     private boolean bombCheck;
-    private int flameLength = 0;
+    private int flameLength;
 
-    private int intersectionLength = 0;
+    private int intersectionLength;
     private Entity brickExplosion;
 
     public BombFlameInfo() {

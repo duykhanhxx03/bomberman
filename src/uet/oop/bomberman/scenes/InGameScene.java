@@ -28,7 +28,7 @@ public class InGameScene {
         return instance;
     }
 
-    public void createSceneInGame(int canvasWidth, int canvasHeight, Font font) {
+    public void createContent(int canvasWidth, int canvasHeight, Font font) {
         this.font = font;
         canvas = new Canvas(Sprite.SCALED_SIZE * canvasWidth,
                 Sprite.SCALED_SIZE * canvasHeight);

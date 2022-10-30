@@ -29,22 +29,18 @@ public class AudioController {
         audioList[AudioType.PLAYER_MOVING_VERTICAL.ordinal()] = new Audio("player_moving_vertical");
     }
 
-    public void playBgm() {
+    public void playInGameBgm() {
         audioList[AudioType.GAME_BGM.ordinal()].playBgm();
     }
-    public void playStartMenuAudio() {
+    public void playStartMenuBgm() {
         audioList[AudioType.MENU_START.ordinal()].playBgm();
     }
-    public void stopStartMenuAudio() {
+    public void stopStartMenuBgm() {
         audioList[AudioType.MENU_START.ordinal()].stopBgm();
     }
 
-    public void stopBgm() {
+    public void stopInMainBgm() {
         audioList[AudioType.GAME_BGM.ordinal()].stopBgm();
-    }
-
-    public void restartBgm() {
-        audioList[AudioType.GAME_BGM.ordinal()].restartBgm();
     }
 
     public void playSoundEffect(AudioType audioType) {

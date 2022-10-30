@@ -21,7 +21,7 @@ public class OpeningScene {
 
     }
 
-    public void createOpeningScene(int sceneWidth, int sceneHeight, Font font) {
+    public void createContent(int sceneWidth, int sceneHeight, Font font) {
         BorderPane borderPane = new BorderPane();
         stageNumber = new Text("STAGE");
         stageNumber.setFont(font);
@@ -35,10 +35,6 @@ public class OpeningScene {
 
     public Scene getOpeningScene() {
         return openingScene;
-    }
-
-    public Text getStageNumber() {
-        return stageNumber;
     }
 
     public void updateStageNumber(int currentLevel) {

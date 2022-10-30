@@ -39,8 +39,6 @@ public class Game {
 
     private StartMenuScene startMenuScene;
 
-    private boolean isPassLevel = false;
-
     private LoseGameScene loseGameScene;
 
     public AudioController audioController;
@@ -140,14 +138,14 @@ public class Game {
 
         if (gameStatus.equals(GameStatus.START_MENU)) {
             stage.setScene(startMenuScene.getStartMenuScene());
-            if (audioController.isPlaying(AudioController.AudioType.GAME_BGM)) audioController.stopBgm();
+            if (audioController.isPlaying(AudioController.AudioType.GAME_BGM)) audioController.stopInMainBgm();
             if (!audioController.isPlaying(AudioController.AudioType.MENU_START)) {
-                audioController.playStartMenuAudio();
+                audioController.playStartMenuBgm();
             }
         }
 
         if (gameStatus.equals(GameStatus.NEXT_LEVEL_BRIDGE)) {
-            if (audioController.isPlaying(AudioController.AudioType.GAME_BGM)) audioController.stopBgm();
+            if (audioController.isPlaying(AudioController.AudioType.GAME_BGM)) audioController.stopInMainBgm();
 
             if (!Game.getInstance().getAudioController().isPlaying(AudioController.AudioType.PLAYER_WIN)) {
                 Game.getInstance().getAudioController().playSoundEffect(AudioController.AudioType.PLAYER_WIN);
@@ -170,8 +168,8 @@ public class Game {
         }
 
         if (gameStatus.equals(GameStatus.OPENING)) {
-            if (audioController.isPlaying(AudioController.AudioType.MENU_START)) audioController.stopStartMenuAudio();
-            if (audioController.isPlaying(AudioController.AudioType.GAME_BGM)) audioController.stopBgm();
+            if (audioController.isPlaying(AudioController.AudioType.MENU_START)) audioController.stopStartMenuBgm();
+            if (audioController.isPlaying(AudioController.AudioType.GAME_BGM)) audioController.stopInMainBgm();
 
             if (!audioController.isPlaying(AudioController.AudioType.STAGE_START)) {
                 audioController.playSoundEffect(AudioController.AudioType.STAGE_START);
@@ -198,7 +196,7 @@ public class Game {
 
         if (gameStatus.equals(GameStatus.PLAYING)) {
             if (!audioController.isPlaying(AudioController.AudioType.GAME_BGM)) {
-                audioController.restartBgm();
+                audioController.playInGameBgm();
             }
             stage.setScene(inGameScene.getInGameScene());
             getCurrentGameMap().update();
@@ -214,7 +212,7 @@ public class Game {
         }
 
         if (gameStatus.equals(GameStatus.LOSE)) {
-            if (audioController.isPlaying(AudioController.AudioType.GAME_BGM)) audioController.stopBgm();
+            if (audioController.isPlaying(AudioController.AudioType.GAME_BGM)) audioController.stopInMainBgm();
             if (!audioController.isPlaying(AudioController.AudioType.PLAYER_LOSE)) {
                 audioController.playSoundEffect(AudioController.AudioType.PLAYER_LOSE);
             }
@@ -304,15 +302,15 @@ public class Game {
         audioController = AudioController.getInstance();
 
         inGameScene = InGameScene.getInstance();
-        inGameScene.createSceneInGame(GraphicsMGR.WIDTH, GraphicsMGR.HEIGHT, font);
+        inGameScene.createContent(GraphicsMGR.WIDTH, GraphicsMGR.HEIGHT, font);
 
         keyboardEvent = new KeyboardEvent(inGameScene.getInGameScene());
 
         openingScene = OpeningScene.getInstance();
-        openingScene.createOpeningScene(GraphicsMGR.WIDTH, GraphicsMGR.HEIGHT, font);
+        openingScene.createContent(GraphicsMGR.WIDTH, GraphicsMGR.HEIGHT, font);
 
         loseGameScene = LoseGameScene.getInstance();
-        loseGameScene.createLoseGameScene(GraphicsMGR.WIDTH, GraphicsMGR.HEIGHT, font);
+        loseGameScene.createContent(GraphicsMGR.WIDTH, GraphicsMGR.HEIGHT, font);
 
         // Tao map
         gameMapList = new ArrayList<>(MAX_LEVEL);

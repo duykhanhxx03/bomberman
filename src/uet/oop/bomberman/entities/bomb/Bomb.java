@@ -35,48 +35,48 @@ public class Bomb extends Entity implements IObstacle {
     private boolean isAllowedToGoThrough = true;
     private int indexBombSprite = 0;
 
-    private int bombLevel;
+    private final int bombLevel;
     //Up flame
-    private List<Entity> upFlameList = new ArrayList<>();
-    private BombFlameInfo upFlameInfo = new BombFlameInfo();
+    private final List<Entity> upFlameList = new ArrayList<>();
+    private final BombFlameInfo upFlameInfo = new BombFlameInfo();
 
     //Down flame
-    private List<Entity> downFlameList = new ArrayList<>();
-    private BombFlameInfo downFlameInfo = new BombFlameInfo();
+    private final List<Entity> downFlameList = new ArrayList<>();
+    private final BombFlameInfo downFlameInfo = new BombFlameInfo();
 
     //Left flame
-    private List<Entity> leftFlameList = new ArrayList<>();
-    private BombFlameInfo leftFlameInfo = new BombFlameInfo();
+    private final List<Entity> leftFlameList = new ArrayList<>();
+    private final BombFlameInfo leftFlameInfo = new BombFlameInfo();
 
     //Right flame
-    private List<Entity> rightFlameList = new ArrayList<>();
-    private BombFlameInfo rightFlameInfo = new BombFlameInfo();
+    private final List<Entity> rightFlameList = new ArrayList<>();
+    private final BombFlameInfo rightFlameInfo = new BombFlameInfo();
 
     private WentOffPhraseStatus wentOffPhrase;
     private BombStatus bombStatus = BombStatus.WAIT;
-    private Timer timer = new Timer();
-    private TimerTask timerTask = new TimerTask() {
-        int count = 0;
-
-        @Override
-        public void run() {
-            final int countDownBombWait = 3;
-            count++;
-            if (countDownBombWait - count >= 0) {
-                bombStatus = BombStatus.WAIT;
-            } else {
-                bombStatus = BombStatus.WENTOFF;
-                wentOffPhrase = WentOffPhraseStatus.OPENING;
-                indexBombSprite = 0;
-                timer.cancel();
-            }
-        }
-    };
+    private final Timer timer = new Timer();
 
     public Bomb(int xUnit, int yUnit, Image img, int bombLevel, GameMap gameMap) {
         super(xUnit, yUnit, img);
         this.gameMap = gameMap;
         this.bombLevel = bombLevel;
+        TimerTask timerTask = new TimerTask() {
+            int count = 0;
+
+            @Override
+            public void run() {
+                final int countDownBombWait = 3;
+                count++;
+                if (countDownBombWait - count >= 0) {
+                    bombStatus = BombStatus.WAIT;
+                } else {
+                    bombStatus = BombStatus.WENTOFF;
+                    wentOffPhrase = WentOffPhraseStatus.OPENING;
+                    indexBombSprite = 0;
+                    timer.cancel();
+                }
+            }
+        };
         timer.schedule(timerTask, 0, 1000);
 
         //make left flame
@@ -592,28 +592,12 @@ public class Bomb extends Entity implements IObstacle {
         isAllowedToGoThrough = allowedToGoThrough;
     }
 
-    public int getBombLevel() {
-        return bombLevel;
-    }
-
-    public void setBombLevel(int bombLevel) {
-        this.bombLevel = bombLevel;
-    }
-
     public void setBombStatus(BombStatus bombStatus) {
         this.bombStatus = bombStatus;
     }
 
-    public void cancelTimer() {
-        timer.cancel();
-    }
-
     public void setWentOffPhrase(WentOffPhraseStatus wentOffPhrase) {
         this.wentOffPhrase = wentOffPhrase;
-    }
-
-    public WentOffPhraseStatus getWentOffPhrase() {
-        return wentOffPhrase;
     }
 
     public void setIndexBombSprite(int indexBombSprite) {

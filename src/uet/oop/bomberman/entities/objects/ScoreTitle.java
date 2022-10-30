@@ -8,8 +8,7 @@ import javafx.scene.text.Text;
 import uet.oop.bomberman.controllers.Game;
 
 public class ScoreTitle {
-    private static ScoreTitle instance = new ScoreTitle();
-    private Font font;
+    private static final ScoreTitle instance = new ScoreTitle();
     private Text currentLevel;
     private Text scoreTexture;
     private Text leftTexture;
@@ -21,7 +20,6 @@ public class ScoreTitle {
     public void createScoreTitle(Group root, Font font) {
         try {
 //            font = Font.font("Abyssinica SIL", FontWeight.BOLD, 80);
-            this.font = font;
             currentLevel = new Text();
             scoreTexture = new Text();
             leftTexture = new Text();

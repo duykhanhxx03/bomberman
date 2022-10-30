@@ -281,7 +281,7 @@ public class Bomber extends MovingEntity {
             setImg(Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2,
                     Sprite.player_dead3, indexBomberSprite, 50).getImage());
             AudioController instance = Game.getInstance().getAudioController();
-            if (instance.isPlaying(AudioController.AudioType.GAME_BGM)) instance.stopBgm();
+            if (instance.isPlaying(AudioController.AudioType.GAME_BGM)) instance.stopInMainBgm();
 
             if (indexBomberSprite < 50) {
                 ++indexBomberSprite;
@@ -325,12 +325,14 @@ public class Bomber extends MovingEntity {
                     if ((element.getX() / Sprite.SCALED_SIZE == xUnit
                             && element.getY() / Sprite.SCALED_SIZE == yUnit)) {
                         isNotAllowed = true;
+                        break;
                     }
                 }
                 for (Entity element : gameMap.getEnemies()) {
                     if ((element.getX() / Sprite.SCALED_SIZE == xUnit
                             && element.getY() / Sprite.SCALED_SIZE == yUnit)) {
                         isNotAllowed = true;
+                        break;
                     }
                 }
                 if (!isNotAllowed) {
