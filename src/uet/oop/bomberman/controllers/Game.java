@@ -324,7 +324,7 @@ public class Game {
     }
 
     public void init() {
-        currentLevel = 5;
+        currentLevel = 1;
         bomberLeft = Bomber.BOMBER_LEFT_DEFAULT;
         bomberScore = Bomber.BOMBER_SCORE_DEFAULT;
         itemInfo = new ItemInfo();
