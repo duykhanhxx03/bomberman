@@ -1,5 +1,6 @@
 package uet.oop.bomberman.graphics;
 
+import uet.oop.bomberman.controllers.AudioController;
 import uet.oop.bomberman.controllers.CollisionDetector;
 import uet.oop.bomberman.controllers.Game;
 import uet.oop.bomberman.entities.*;
@@ -183,6 +184,9 @@ public class GameMap {
             Enemy enemy = (Enemy) list.get(i);
             if (enemy.getLifeStatus().equals(LifeStatus.DEAD)) {
                 if (enemy.getDeadPhaseStatus().equals(Enemy.DeadPhaseStatus.PHASE_DISAPPEAR)) {
+                    if (list.size() == 1) {
+                        Game.getInstance().audioController.playSoundEffect(AudioController.AudioType.STAGE_CLEAR);
+                    }
                     list.remove(i);
                     Game.getInstance().setBomberScore(Game.getInstance().getBomberScore() + enemy.getScore());
                     i--;

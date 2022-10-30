@@ -475,14 +475,6 @@ public class Bomber extends MovingEntity {
         isFlamePass = flamePass;
     }
 
-    public boolean isFlamePass() {
-        return isFlamePass;
-    }
-
-    public boolean isDetonator() {
-        return isDetonator;
-    }
-
     public void setDetonator(boolean detonator) {
         isDetonator = detonator;
     }

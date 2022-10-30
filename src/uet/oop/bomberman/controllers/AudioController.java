@@ -4,7 +4,7 @@ public class AudioController {
     public enum AudioType {
         GAME_BGM, BOMB_DESTROY, BOMB_PLANTED, ENEMY_DIE, ITEM_COLLECTED,
         MENU_START, STAGE_START, PLAYER_DIE, PLAYER_WIN, PLAYER_LOSE,
-        PLAYER_MOVING_HORIZONTAL, PLAYER_MOVING_VERTICAL, SIZE
+        PLAYER_MOVING_HORIZONTAL, PLAYER_MOVING_VERTICAL,STAGE_CLEAR, SIZE
     }
 
     private static final AudioController instance = new AudioController();
@@ -27,6 +27,7 @@ public class AudioController {
         audioList[AudioType.STAGE_START.ordinal()] = new Audio("stage_start");
         audioList[AudioType.PLAYER_MOVING_HORIZONTAL.ordinal()] = new Audio("player_moving_horizontal");
         audioList[AudioType.PLAYER_MOVING_VERTICAL.ordinal()] = new Audio("player_moving_vertical");
+        audioList[AudioType.STAGE_CLEAR.ordinal()] = new Audio("stage_clear");
     }
 
     public void playInGameBgm() {
