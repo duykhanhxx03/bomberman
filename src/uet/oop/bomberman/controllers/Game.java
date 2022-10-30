@@ -186,8 +186,11 @@ public class Game {
                     if (count > 0) {
                         count--;
                     } else {
+                        if (gameStatus.equals(GameStatus.OPENING)) {
+                            gameStatus = GameStatus.PLAYING;
+                        }
                         timer.cancel();
-                        gameStatus = GameStatus.PLAYING;
+
                     }
                 }
             };
@@ -200,10 +203,10 @@ public class Game {
             }
             stage.setScene(inGameScene.getInGameScene());
             getCurrentGameMap().update();
-            getCurrentGameMap().getPlayer().updatePauseHandle();
             inGameScene.getScoreTitle().update(getBomberLeft(),
                     getBomberScore(), inGameScene.getInGameScene());
             inGameScene.getPausedText().setVisible(false);
+            getCurrentGameMap().getPlayer().updatePauseHandle();
         }
 
         if (gameStatus.equals(GameStatus.PAUSED)) {

@@ -7,6 +7,9 @@ public class ItemInfo {
     private int itemFlamesCount;
     private int itemBombsCount;
 
+    private boolean isWallPass;
+    private boolean isBombPass;
+
     public void increaseItemSpeedCount() {
         itemSpeedCount++;
     }
@@ -19,10 +22,20 @@ public class ItemInfo {
         itemBombsCount++;
     }
 
+    public void setWallPass(boolean wallPass) {
+        isWallPass = wallPass;
+    }
+
+    public void setBombPass(boolean bombPass) {
+        isBombPass = bombPass;
+    }
+
     public ItemInfo() {
         itemBombsCount = Bomber.BOMBER_BOMB_LIST_SIZE_DEFAULT;
         itemSpeedCount = Bomber.BOMBER_SPEED_DEFAULT;
         itemFlamesCount = Bomber.BOMBER_BOMB_LEVEL_DEFAULT;
+        isWallPass = false;
+        isBombPass = false;
     }
 
     public int getItemBombsCount() {
@@ -37,9 +50,11 @@ public class ItemInfo {
         return itemSpeedCount;
     }
 
-    public void reset() {
-        itemBombsCount = Bomber.BOMBER_BOMB_LIST_SIZE_DEFAULT;
-        itemSpeedCount = Bomber.BOMBER_SPEED_DEFAULT;
-        itemFlamesCount = Bomber.BOMBER_BOMB_LEVEL_DEFAULT;
+    public boolean isBombPass() {
+        return isBombPass;
+    }
+
+    public boolean isWallPass() {
+        return isWallPass;
     }
 }

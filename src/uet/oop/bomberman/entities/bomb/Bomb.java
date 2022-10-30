@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.controllers.AudioController;
 import uet.oop.bomberman.controllers.BombFlameInfo;
 import uet.oop.bomberman.controllers.Game;
+import uet.oop.bomberman.controllers.GameStatus;
 import uet.oop.bomberman.entities.objects.Brick;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.objects.IObstacle;
@@ -66,7 +67,9 @@ public class Bomb extends Entity implements IObstacle {
             @Override
             public void run() {
                 final int countDownBombWait = 3;
-                count++;
+                if(!Game.getInstance().getGameStatus().equals(GameStatus.PAUSED)){
+                    count++;
+                }
                 if (countDownBombWait - count >= 0) {
                     bombStatus = BombStatus.WAIT;
                 } else {

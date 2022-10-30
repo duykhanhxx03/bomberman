@@ -4,10 +4,7 @@ import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.enemies.Enemy;
-import uet.oop.bomberman.entities.items.ItemBombs;
-import uet.oop.bomberman.entities.items.ItemFlames;
-import uet.oop.bomberman.entities.items.ItemSpeed;
-import uet.oop.bomberman.entities.items.Portal;
+import uet.oop.bomberman.entities.items.*;
 import uet.oop.bomberman.entities.objects.Wall;
 import uet.oop.bomberman.graphics.GameMap;
 import uet.oop.bomberman.graphics.Sprite;
@@ -25,7 +22,10 @@ public class CollisionDetector {
         this.gameMap = gameMap;
     }
 
-    public boolean checkCollisionWithBombWhenMove(int x, int y, List<Entity> bombList) {
+    public boolean checkCollisionWithBombWhenMove(int x, int y, List<Entity> bombList, boolean isBombPass) {
+        if (isBombPass){
+            return false;
+        }
         Rectangle rectBomber = new Rectangle(x, y, Bomber.REAL_WIDTH, Bomber.REAL_HEIGHT);
         for (Entity element : bombList) {
             Bomb bomb = (Bomb) element;
@@ -142,6 +142,22 @@ public class CollisionDetector {
                     }
                     bomber.increaseBombLevel();
                     gameInstance.getItemInfo().increaseItemFlamesCount();
+                    delPos = i;
+                }
+                if (gameMap.getItems().get(i) instanceof ItemWallPass) {
+                    if (!Game.getInstance().getAudioController().isPlaying(AudioController.AudioType.ITEM_COLLECTED)) {
+                        Game.getInstance().getAudioController().playSoundEffect(AudioController.AudioType.ITEM_COLLECTED);
+                    }
+                    bomber.setWallPass(true);
+                    gameInstance.getItemInfo().setWallPass(true);
+                    delPos = i;
+                }
+                if (gameMap.getItems().get(i) instanceof ItemBombPass) {
+                    if (!Game.getInstance().getAudioController().isPlaying(AudioController.AudioType.ITEM_COLLECTED)) {
+                        Game.getInstance().getAudioController().playSoundEffect(AudioController.AudioType.ITEM_COLLECTED);
+                    }
+                    bomber.setBombPass(true);
+                    gameInstance.getItemInfo().setBombPass(true);
                     delPos = i;
                 }
                 if (gameMap.getItems().get(i) instanceof Portal

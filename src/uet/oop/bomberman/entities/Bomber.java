@@ -51,6 +51,10 @@ public class Bomber extends MovingEntity {
 
     private int indexBomberSprite = 0;
 
+    private boolean isWallPass = false;
+
+    private boolean isBombPass = false;
+
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
     }
@@ -68,6 +72,8 @@ public class Bomber extends MovingEntity {
         setBombLevel(itemInfo.getItemFlamesCount());
         setSpeedRun(itemInfo.getItemSpeedCount());
         setBombListMaxSize(itemInfo.getItemBombsCount());
+        setWallPass(itemInfo.isWallPass());
+        setBombPass(itemInfo.isBombPass());
     }
 
     private void updateKeyHandle() {
@@ -77,7 +83,7 @@ public class Bomber extends MovingEntity {
             int xUnit = this.x / Sprite.SCALED_SIZE;
             int yUnit = this.y / Sprite.SCALED_SIZE;
 
-            AudioController instance= Game.getInstance().getAudioController();
+            AudioController instance = Game.getInstance().getAudioController();
 
             //horizontal support
             int horizontalMovingSupport2 = (this.y + Bomber.REAL_HEIGHT)
@@ -107,8 +113,10 @@ public class Bomber extends MovingEntity {
             //UP
             if (keyboardEvent.isPressed(KeyCode.W)) {
                 isPressed = true;
-                boolean upBombCheck = collisionDetector.checkCollisionWithBombWhenMove(this.x, this.y - speedRun, bombList);
-                boolean upMapCheck = collisionDetector.checkCollisionWithMap(this.x, this.y - speedRun, REAL_WIDTH, REAL_HEIGHT, false);
+                boolean upBombCheck = collisionDetector.checkCollisionWithBombWhenMove(this.x,
+                        this.y - speedRun, bombList, isBombPass);
+                boolean upMapCheck = collisionDetector.checkCollisionWithMap(this.x, this.y - speedRun,
+                        REAL_WIDTH, REAL_HEIGHT, isWallPass);
                 if (upMapCheck || upBombCheck) {
                     if (!upBombCheck) {
                         if (verticalMovingSupport1 >= 15
@@ -136,7 +144,7 @@ public class Bomber extends MovingEntity {
                     super.updateDirection(DirectionStatus.UP, false, speedRun);
                     indexBomberSprite = 0;
                 } else {
-                    if (!instance.isPlaying(AudioController.AudioType.PLAYER_MOVING_VERTICAL)){
+                    if (!instance.isPlaying(AudioController.AudioType.PLAYER_MOVING_VERTICAL)) {
                         instance.playSoundEffect(AudioController.AudioType.PLAYER_MOVING_VERTICAL);
                     }
                     super.updateDirection(DirectionStatus.UP, true, speedRun);
@@ -148,8 +156,10 @@ public class Bomber extends MovingEntity {
             //DOWN
             if (keyboardEvent.isPressed(KeyCode.S)) {
                 isPressed = true;
-                boolean downBombCheck = collisionDetector.checkCollisionWithBombWhenMove(this.x, this.y + speedRun, bombList);
-                boolean downMapCheck = collisionDetector.checkCollisionWithMap(this.x, this.y + speedRun, REAL_WIDTH, REAL_HEIGHT, false);
+                boolean downBombCheck = collisionDetector.checkCollisionWithBombWhenMove(this.x,
+                        this.y + speedRun, bombList, isBombPass);
+                boolean downMapCheck = collisionDetector.checkCollisionWithMap(this.x, this.y + speedRun,
+                        REAL_WIDTH, REAL_HEIGHT, isWallPass);
                 if (downMapCheck || downBombCheck) {
                     if (!downBombCheck) {
                         if (verticalMovingSupport1 >= 15
@@ -176,7 +186,7 @@ public class Bomber extends MovingEntity {
                     indexBomberSprite = 0;
                     super.updateDirection(DirectionStatus.DOWN, false, speedRun);
                 } else {
-                    if (!instance.isPlaying(AudioController.AudioType.PLAYER_MOVING_VERTICAL)){
+                    if (!instance.isPlaying(AudioController.AudioType.PLAYER_MOVING_VERTICAL)) {
                         instance.playSoundEffect(AudioController.AudioType.PLAYER_MOVING_VERTICAL);
                     }
                     super.updateDirection(DirectionStatus.DOWN, true, speedRun);
@@ -188,8 +198,10 @@ public class Bomber extends MovingEntity {
             //LEFT
             if (keyboardEvent.isPressed(KeyCode.A)) {
                 isPressed = true;
-                boolean leftBombCheck = collisionDetector.checkCollisionWithBombWhenMove(this.x - speedRun, this.y, bombList);
-                boolean leftMapCheck = collisionDetector.checkCollisionWithMap(this.x - speedRun, this.y, REAL_WIDTH, REAL_HEIGHT, false);
+                boolean leftBombCheck = collisionDetector.checkCollisionWithBombWhenMove(this.x - speedRun,
+                        this.y, bombList, isBombPass);
+                boolean leftMapCheck = collisionDetector.checkCollisionWithMap(this.x - speedRun, this.y,
+                        REAL_WIDTH, REAL_HEIGHT, isWallPass);
                 if (leftMapCheck || leftBombCheck) {
                     if (!leftBombCheck) {
                         if (horizontalMovingSupport1 >= 18
@@ -215,7 +227,7 @@ public class Bomber extends MovingEntity {
                     super.updateDirection(DirectionStatus.LEFT, false, speedRun);
                     indexBomberSprite = 0;
                 } else {
-                    if (!instance.isPlaying(AudioController.AudioType.PLAYER_MOVING_HORIZONTAL)){
+                    if (!instance.isPlaying(AudioController.AudioType.PLAYER_MOVING_HORIZONTAL)) {
                         instance.playSoundEffect(AudioController.AudioType.PLAYER_MOVING_HORIZONTAL);
                     }
                     super.updateDirection(DirectionStatus.LEFT, true, speedRun);
@@ -228,8 +240,10 @@ public class Bomber extends MovingEntity {
             //RIGHT
             if (keyboardEvent.isPressed(KeyCode.D)) {
                 isPressed = true;
-                boolean rightBombCheck = collisionDetector.checkCollisionWithBombWhenMove(this.x + speedRun, this.y, bombList);
-                boolean rightMapCheck = collisionDetector.checkCollisionWithMap(this.x + speedRun, this.y, REAL_WIDTH, REAL_HEIGHT, false);
+                boolean rightBombCheck = collisionDetector.checkCollisionWithBombWhenMove(this.x + speedRun
+                        , this.y, bombList, isBombPass);
+                boolean rightMapCheck = collisionDetector.checkCollisionWithMap(this.x + speedRun, this.y,
+                        REAL_WIDTH, REAL_HEIGHT, isWallPass);
                 if (rightMapCheck || rightBombCheck) {
                     if (!rightBombCheck) {
                         if (horizontalMovingSupport1 >= 18
@@ -254,7 +268,7 @@ public class Bomber extends MovingEntity {
                     super.updateDirection(DirectionStatus.RIGHT, false, speedRun);
                     indexBomberSprite = 0;
                 } else {
-                    if (!instance.isPlaying(AudioController.AudioType.PLAYER_MOVING_HORIZONTAL)){
+                    if (!instance.isPlaying(AudioController.AudioType.PLAYER_MOVING_HORIZONTAL)) {
                         instance.playSoundEffect(AudioController.AudioType.PLAYER_MOVING_HORIZONTAL);
                     }
                     super.updateDirection(DirectionStatus.RIGHT, true, speedRun);
@@ -435,4 +449,12 @@ public class Bomber extends MovingEntity {
         return bombList;
     }
 
+
+    public void setWallPass(boolean wallPass) {
+        isWallPass = wallPass;
+    }
+
+    public void setBombPass(boolean bombPass) {
+        isBombPass = bombPass;
+    }
 }

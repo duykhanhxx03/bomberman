@@ -4,10 +4,7 @@ import uet.oop.bomberman.controllers.CollisionDetector;
 import uet.oop.bomberman.controllers.Game;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.enemies.*;
-import uet.oop.bomberman.entities.items.ItemBombs;
-import uet.oop.bomberman.entities.items.ItemFlames;
-import uet.oop.bomberman.entities.items.ItemSpeed;
-import uet.oop.bomberman.entities.items.Portal;
+import uet.oop.bomberman.entities.items.*;
 import uet.oop.bomberman.entities.objects.*;
 import uet.oop.bomberman.events.KeyboardEvent;
 
@@ -106,6 +103,16 @@ public class GameMap {
                         case 's':
                             bricks.add(new Brick(j, i, Sprite.brick.getImage()));
                             items.add(new ItemSpeed(j, i, Sprite.powerup_speed.getImage()));
+                            tmpWallAndGrass.add(new Grass(j, i, Sprite.grass.getImage()));
+                            break;
+                        case 'w':
+                            bricks.add(new Brick(j, i, Sprite.brick.getImage()));
+                            items.add(new ItemWallPass(j, i, Sprite.powerup_wallpass.getImage()));
+                            tmpWallAndGrass.add(new Grass(j, i, Sprite.grass.getImage()));
+                            break;
+                        case 'c':
+                            bricks.add(new Brick(j, i, Sprite.brick.getImage()));
+                            items.add(new ItemBombPass(j, i, Sprite.powerup_bombpass.getImage()));
                             tmpWallAndGrass.add(new Grass(j, i, Sprite.grass.getImage()));
                             break;
                         case 'x':
