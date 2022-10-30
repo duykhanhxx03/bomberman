@@ -27,15 +27,19 @@ public class KeyboardEvent implements EventHandler<KeyEvent> {
         if (event.getEventType().equals(KeyEvent.KEY_PRESSED)) {
             switch (event.getCode()) {
                 case A:
+                case LEFT:
                     isKeyLeft = true;
                     break;
                 case D:
+                case RIGHT:
                     isKeyRight = true;
                     break;
                 case S:
+                case DOWN:
                     isKeyDown = true;
                     break;
                 case W:
+                case UP:
                     isKeyUp = true;
                     break;
                 case P:
@@ -54,15 +58,19 @@ public class KeyboardEvent implements EventHandler<KeyEvent> {
         } else if (event.getEventType().equals(KeyEvent.KEY_RELEASED)) {
             switch (event.getCode()) {
                 case A:
+                case LEFT:
                     isKeyLeft = false;
                     break;
                 case D:
+                case RIGHT:
                     isKeyRight = false;
                     break;
                 case S:
+                case DOWN:
                     isKeyDown = false;
                     break;
                 case W:
+                case UP:
                     isKeyUp = false;
                     break;
                 case P:
@@ -85,15 +93,19 @@ public class KeyboardEvent implements EventHandler<KeyEvent> {
         boolean result = false;
         switch (keys) {
             case A:
+            case LEFT:
                 result = isKeyLeft;
                 break;
             case S:
+            case DOWN:
                 result = isKeyDown;
                 break;
             case D:
+            case RIGHT:
                 result = isKeyRight;
                 break;
             case W:
+            case UP:
                 result = isKeyUp;
                 break;
             case SPACE:

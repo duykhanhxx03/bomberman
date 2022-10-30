@@ -127,8 +127,8 @@ public class Bomber extends MovingEntity {
                         if (verticalMovingSupport1 >= 15
                                 && gameMap.getWallsAndGrassAtPosition(xUnit * Sprite.SCALED_SIZE,
                                 (yUnit - 1) * Sprite.SCALED_SIZE) instanceof Grass
-                                && gameMap.getBrickAtPosition(xUnit * Sprite.SCALED_SIZE,
-                                (yUnit - 1) * Sprite.SCALED_SIZE) == null) {
+                                && ((gameMap.getBrickAtPosition(xUnit * Sprite.SCALED_SIZE,
+                                (yUnit - 1) * Sprite.SCALED_SIZE) == null) || isWallPass)) {
                             super.updateDirection(DirectionStatus.LEFT, true, speedRun);
                         }
 
@@ -140,8 +140,8 @@ public class Bomber extends MovingEntity {
 
                                 && gameMap.getWallsAndGrassAtPosition((xUnit + 1) * Sprite.SCALED_SIZE,
                                 (yUnit - 1) * Sprite.SCALED_SIZE) instanceof Grass
-                                && gameMap.getBrickAtPosition((xUnit + 1) * Sprite.SCALED_SIZE,
-                                (yUnit - 1) * Sprite.SCALED_SIZE) == null) {
+                                && (gameMap.getBrickAtPosition((xUnit + 1) * Sprite.SCALED_SIZE,
+                                (yUnit - 1) * Sprite.SCALED_SIZE) == null || isWallPass)) {
                             super.updateDirection(DirectionStatus.RIGHT, true, speedRun);
 
                         }
@@ -170,8 +170,8 @@ public class Bomber extends MovingEntity {
                         if (verticalMovingSupport1 >= 15
                                 && gameMap.getWallsAndGrassAtPosition(xUnit * Sprite.SCALED_SIZE,
                                 (yUnit + 1) * Sprite.SCALED_SIZE) instanceof Grass
-                                && gameMap.getBrickAtPosition(xUnit * Sprite.SCALED_SIZE,
-                                (yUnit + 1) * Sprite.SCALED_SIZE) == null) {
+                                && (gameMap.getBrickAtPosition(xUnit * Sprite.SCALED_SIZE,
+                                (yUnit + 1) * Sprite.SCALED_SIZE) == null || isWallPass)) {
                             super.updateDirection(DirectionStatus.LEFT, true, speedRun);
                         }
 
@@ -183,8 +183,8 @@ public class Bomber extends MovingEntity {
 
                                 && gameMap.getWallsAndGrassAtPosition((xUnit + 1) * Sprite.SCALED_SIZE,
                                 (yUnit + 1) * Sprite.SCALED_SIZE) instanceof Grass
-                                && gameMap.getBrickAtPosition((xUnit + 1) * Sprite.SCALED_SIZE,
-                                (yUnit + 1) * Sprite.SCALED_SIZE) == null) {
+                                && (gameMap.getBrickAtPosition((xUnit + 1) * Sprite.SCALED_SIZE,
+                                (yUnit + 1) * Sprite.SCALED_SIZE) == null || isWallPass)) {
                             super.updateDirection(DirectionStatus.RIGHT, true, speedRun);
                         }
                     }
@@ -212,8 +212,8 @@ public class Bomber extends MovingEntity {
                         if (horizontalMovingSupport1 >= 18
                                 && gameMap.getWallsAndGrassAtPosition((xUnit - 1) * Sprite.SCALED_SIZE,
                                 yUnit * Sprite.SCALED_SIZE) instanceof Grass
-                                && gameMap.getBrickAtPosition((xUnit - 1) * Sprite.SCALED_SIZE,
-                                yUnit * Sprite.SCALED_SIZE) == null) {
+                                && (gameMap.getBrickAtPosition((xUnit - 1) * Sprite.SCALED_SIZE,
+                                yUnit * Sprite.SCALED_SIZE) == null || isWallPass)) {
                             super.updateDirection(DirectionStatus.UP, true, speedRun);
                         }
                         if (horizontalMovingSupport2 >= 18
@@ -222,10 +222,10 @@ public class Bomber extends MovingEntity {
                                 || gameMap.getBrickAtPosition((xUnit - 1) * Sprite.SCALED_SIZE,
                                 yUnit * Sprite.SCALED_SIZE) instanceof Brick)
 
-                                && (gameMap.getWallsAndGrassAtPosition((xUnit - 1) * Sprite.SCALED_SIZE,
+                                && gameMap.getWallsAndGrassAtPosition((xUnit - 1) * Sprite.SCALED_SIZE,
                                 (yUnit + 1) * Sprite.SCALED_SIZE) instanceof Grass
-                                && gameMap.getBrickAtPosition((xUnit - 1) * Sprite.SCALED_SIZE,
-                                (yUnit + 1) * Sprite.SCALED_SIZE) == null)) {
+                                && (gameMap.getBrickAtPosition((xUnit - 1) * Sprite.SCALED_SIZE,
+                                (yUnit + 1) * Sprite.SCALED_SIZE) == null || isWallPass)) {
                             super.updateDirection(DirectionStatus.DOWN, true, speedRun);
                         }
                     }
@@ -241,7 +241,6 @@ public class Bomber extends MovingEntity {
                 setImg(Sprite.movingSprite(Sprite.player_left, Sprite.player_left_1,
                         Sprite.player_left_2, indexBomberSprite, 15).getImage());
             }
-
             //RIGHT
             if (keyboardEvent.isPressed(KeyCode.D)) {
                 isPressed = true;
@@ -254,8 +253,8 @@ public class Bomber extends MovingEntity {
                         if (horizontalMovingSupport1 >= 18
                                 && gameMap.getWallsAndGrassAtPosition((xUnit + 1) * Sprite.SCALED_SIZE,
                                 yUnit * Sprite.SCALED_SIZE) instanceof Grass
-                                && gameMap.getBrickAtPosition((xUnit + 1) * Sprite.SCALED_SIZE,
-                                yUnit * Sprite.SCALED_SIZE) == null) {
+                                && (gameMap.getBrickAtPosition((xUnit + 1) * Sprite.SCALED_SIZE,
+                                yUnit * Sprite.SCALED_SIZE) == null || isWallPass)) {
                             super.updateDirection(DirectionStatus.UP, true, speedRun);
                         }
                         if (horizontalMovingSupport2 >= 18
@@ -265,8 +264,8 @@ public class Bomber extends MovingEntity {
                                 yUnit * Sprite.SCALED_SIZE) instanceof Brick)
                                 && (gameMap.getWallsAndGrassAtPosition((xUnit + 1) * Sprite.SCALED_SIZE,
                                 (yUnit + 1) * Sprite.SCALED_SIZE) instanceof Grass
-                                && gameMap.getBrickAtPosition((xUnit + 1) * Sprite.SCALED_SIZE,
-                                (yUnit + 1) * Sprite.SCALED_SIZE) == null)) {
+                                && (gameMap.getBrickAtPosition((xUnit + 1) * Sprite.SCALED_SIZE,
+                                (yUnit + 1) * Sprite.SCALED_SIZE) == null || isWallPass))) {
                             super.updateDirection(DirectionStatus.DOWN, true, speedRun);
                         }
                     }
@@ -344,6 +343,8 @@ public class Bomber extends MovingEntity {
         int xUnit = (getX() + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE;
         int yUnit = (getY() + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE;
 
+        if (gameMap.getBrickAtPosition(xUnit * Sprite.SCALED_SIZE,
+                yUnit * Sprite.SCALED_SIZE) != null) return;
         if (bombList.size() < bombListMaxSize) {
             if (!bombList.isEmpty() && isPlantBomb) {
                 //check duplicate bomb has already in the list or not
