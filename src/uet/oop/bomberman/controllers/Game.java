@@ -10,10 +10,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.events.KeyboardEvent;
 import uet.oop.bomberman.graphics.GameMap;
 import uet.oop.bomberman.graphics.GraphicsMGR;
-import uet.oop.bomberman.scenes.LoseGameScene;
-import uet.oop.bomberman.scenes.OpeningScene;
-import uet.oop.bomberman.scenes.InGameScene;
-import uet.oop.bomberman.scenes.StartMenuScene;
+import uet.oop.bomberman.scenes.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +19,7 @@ import java.util.TimerTask;
 
 public class Game {
     private int currentLevel = 1;
-    public final static int MAX_LEVEL = 3;
+    public final static int MAX_LEVEL = 5;
     // Tao root container
 
     private ItemInfo itemInfo;
@@ -40,6 +37,8 @@ public class Game {
     private StartMenuScene startMenuScene;
 
     private LoseGameScene loseGameScene;
+
+    private WinGameScene winGameScene;
 
     public AudioController audioController;
 
@@ -159,8 +158,10 @@ public class Game {
                     if (count > 0) {
                         count--;
                     } else {
+                        if (gameStatus.equals(GameStatus.NEXT_LEVEL_BRIDGE)) {
+                            nextLevel();
+                        }
                         timer.cancel();
-                        nextLevel();
                     }
                 }
             };
@@ -231,6 +232,33 @@ public class Game {
                         count--;
                     } else {
                         if (gameStatus.equals(GameStatus.LOSE)) {
+                            timer.cancel();
+                            gameStatus = GameStatus.START_MENU;
+                        }
+                    }
+                }
+            };
+            timer.schedule(timerTask, 0, 1000);
+        }
+
+        if (gameStatus.equals(GameStatus.WIN)) {
+            if (audioController.isPlaying(AudioController.AudioType.GAME_BGM)) audioController.stopInMainBgm();
+
+            if (!Game.getInstance().getAudioController().isPlaying(AudioController.AudioType.PLAYER_WIN)) {
+                Game.getInstance().getAudioController().playSoundEffect(AudioController.AudioType.PLAYER_WIN);
+            }
+            stage.setScene(WinGameScene.getInstance().getWinGameScene());
+            init();
+            Timer timer = new Timer();
+            TimerTask timerTask = new TimerTask() {
+                int count = 6;
+
+                @Override
+                public void run() {
+                    if (count > 0) {
+                        count--;
+                    } else {
+                        if (gameStatus.equals(GameStatus.WIN)) {
                             timer.cancel();
                             gameStatus = GameStatus.START_MENU;
                         }
@@ -314,6 +342,9 @@ public class Game {
 
         loseGameScene = LoseGameScene.getInstance();
         loseGameScene.createContent(GraphicsMGR.WIDTH, GraphicsMGR.HEIGHT, font);
+
+        winGameScene = WinGameScene.getInstance();
+        winGameScene.createContent(GraphicsMGR.WIDTH, GraphicsMGR.HEIGHT, font);
 
         // Tao map
         gameMapList = new ArrayList<>(MAX_LEVEL);

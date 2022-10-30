@@ -11,6 +11,8 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.List;
 
+import static uet.oop.bomberman.controllers.Game.MAX_LEVEL;
+
 public class CollisionDetector {
     private GameMap gameMap;
 
@@ -23,7 +25,7 @@ public class CollisionDetector {
     }
 
     public boolean checkCollisionWithBombWhenMove(int x, int y, List<Entity> bombList, boolean isBombPass) {
-        if (isBombPass){
+        if (isBombPass) {
             return false;
         }
         Rectangle rectBomber = new Rectangle(x, y, Bomber.REAL_WIDTH, Bomber.REAL_HEIGHT);
@@ -53,7 +55,7 @@ public class CollisionDetector {
     }
 
     public boolean checkCollisionWithFlame(int x, int y, int REAL_WIDTH, int REAL_HEIGHT, boolean isFlamePass) {
-        if (isFlamePass){
+        if (isFlamePass) {
             return false;
         }
         final int FIX_POSITION = 6;
@@ -110,7 +112,6 @@ public class CollisionDetector {
                     return true;
                 }
             }
-
         }
         return false;
     }
@@ -183,7 +184,11 @@ public class CollisionDetector {
                 if (gameMap.getItems().get(i) instanceof Portal
                         && gameMap.getEnemies().size() == 0
                         && Game.getInstance().getGameStatus().equals(GameStatus.PLAYING)) {
-                    Game.getInstance().setGameStatus(GameStatus.NEXT_LEVEL_BRIDGE);
+                    if (gameInstance.getCurrentLevel() + 1 > MAX_LEVEL && !gameInstance.equals(GameStatus.WIN)) {
+                        gameInstance.setGameStatus(GameStatus.WIN);
+                    } else {
+                        Game.getInstance().setGameStatus(GameStatus.NEXT_LEVEL_BRIDGE);
+                    }
                 }
             }
         }
