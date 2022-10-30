@@ -32,6 +32,12 @@ public class AudioController {
     public void playBgm() {
         audioList[AudioType.GAME_BGM.ordinal()].playBgm();
     }
+    public void playStartMenuAudio() {
+        audioList[AudioType.MENU_START.ordinal()].playBgm();
+    }
+    public void stopStartMenuAudio() {
+        audioList[AudioType.MENU_START.ordinal()].stopBgm();
+    }
 
     public void stopBgm() {
         audioList[AudioType.GAME_BGM.ordinal()].stopBgm();

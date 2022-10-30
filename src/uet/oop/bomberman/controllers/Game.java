@@ -13,6 +13,7 @@ import uet.oop.bomberman.graphics.GraphicsMGR;
 import uet.oop.bomberman.scenes.LoseGameScene;
 import uet.oop.bomberman.scenes.OpeningScene;
 import uet.oop.bomberman.scenes.InGameScene;
+import uet.oop.bomberman.scenes.StartMenuScene;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +37,13 @@ public class Game {
     private InGameScene inGameScene;
     private OpeningScene openingScene;
 
+    private StartMenuScene startMenuScene;
+
     private boolean isPassLevel = false;
 
     private LoseGameScene loseGameScene;
 
-    public AudioController audioController = AudioController.getInstance();
+    public AudioController audioController;
 
 
     // Tao keyboard event
@@ -65,14 +68,14 @@ public class Game {
 
     public void createGame(Stage stage) {
         try {
-            font = Font.loadFont("file:res/PixelEmulator-xq08.ttf", 80);
+            font = Font.loadFont("file:res/fonts/PixelEmulator-xq08.ttf", 80);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
         this.stage = stage;
         init();
-        gameStatus = GameStatus.OPENING;
-        stage.setScene(openingScene.getOpeningScene());
+        gameStatus = GameStatus.START_MENU;
+        stage.setScene(startMenuScene.getStartMenuScene());
     }
 
     public void increaseBomberLeft() {
@@ -119,8 +122,6 @@ public class Game {
             currentLevel++;
             increaseBomberLeft();
             getCurrentGameMap().getPlayer().initItemInfo(getItemInfo());
-            System.out.println(currentLevel);
-
             gameStatus = GameStatus.OPENING;
         }
     }
@@ -136,6 +137,14 @@ public class Game {
     }
 
     public void update() {
+
+        if (gameStatus.equals(GameStatus.START_MENU)) {
+            stage.setScene(startMenuScene.getStartMenuScene());
+            if (audioController.isPlaying(AudioController.AudioType.GAME_BGM)) audioController.stopBgm();
+            if (!audioController.isPlaying(AudioController.AudioType.MENU_START)) {
+                audioController.playStartMenuAudio();
+            }
+        }
 
         if (gameStatus.equals(GameStatus.NEXT_LEVEL_BRIDGE)) {
             if (audioController.isPlaying(AudioController.AudioType.GAME_BGM)) audioController.stopBgm();
@@ -161,6 +170,7 @@ public class Game {
         }
 
         if (gameStatus.equals(GameStatus.OPENING)) {
+            if (audioController.isPlaying(AudioController.AudioType.MENU_START)) audioController.stopStartMenuAudio();
             if (audioController.isPlaying(AudioController.AudioType.GAME_BGM)) audioController.stopBgm();
 
             if (!audioController.isPlaying(AudioController.AudioType.STAGE_START)) {
@@ -221,7 +231,7 @@ public class Game {
                     } else {
                         if (gameStatus.equals(GameStatus.LOSE)) {
                             timer.cancel();
-                            gameStatus = GameStatus.OPENING;
+                            gameStatus = GameStatus.START_MENU;
                         }
                     }
                 }
@@ -289,6 +299,9 @@ public class Game {
         bomberLeft = Bomber.BOMBER_LEFT_DEFAULT;
         bomberScore = Bomber.BOMBER_SCORE_DEFAULT;
         itemInfo = new ItemInfo();
+
+        startMenuScene = StartMenuScene.getInstance();
+        audioController = AudioController.getInstance();
 
         inGameScene = InGameScene.getInstance();
         inGameScene.createSceneInGame(GraphicsMGR.WIDTH, GraphicsMGR.HEIGHT, font);
